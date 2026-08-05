@@ -6,19 +6,31 @@
 <title>🎰 Рулетка Роника! 🎰</title>
 
 <style>
+html, body{
+    min-height:100%;
+    margin:0;
+    padding:0;
+}
 body{
     margin:0;
-    padding-top:140px;
+    padding:0;
     background:linear-gradient(180deg,#0a0a0a,#1a1a1a,#0a0a0a);
     color:white;
     font-family:Arial, sans-serif;
     text-align:center;
     overflow-x:hidden;
+    overflow-y:auto;
+}
+.pageContent{
+    position:relative;
+    z-index:1;
+    margin-top:220px;
+    padding:20px 0 40px;
 }
 
 /* Градиентный заголовок */
 h1{
-    margin-top:70px;
+    margin:0 0 12px;
     font-size:45px;
     background:linear-gradient(90deg,#ffcc00,#ff8800,#ffcc00);
     -webkit-background-clip:text;
@@ -59,34 +71,54 @@ h1{
     box-shadow:0 14px 34px rgba(0,0,0,0.45);
 }
 
+.pageHeader{
+    position:relative !important;
+    top:auto !important;
+    left:auto !important;
+    right:auto !important;
+    width:auto !important;
+    z-index:1000;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+    padding:10px 0 12px;
+    background:rgba(10,10,10,0.08);
+    box-shadow:0 0 30px rgba(0,0,0,0.16);
+    border-bottom:1px solid rgba(255,255,255,0.06);
+    backdrop-filter:blur(12px);
+}
+
 .topControls{
-    position:fixed;
-    top:98px;
-    left:50%;
+    position:relative;
+    top:auto;
+    left:auto;
     display:flex;
     flex-direction:row;
     align-items:center;
     gap:10px;
     justify-content:center;
-    transform:translateX(-50%);
+    transform:none;
     z-index:10;
 }
 
 .loginSection{
-    position:fixed;
-    top:0;
-    left:0;
-    right:0;
+    position:relative;
+    top:auto;
+    left:auto;
+    right:auto;
     display:flex;
     flex-wrap:wrap;
     align-items:center;
     gap:8px;
     justify-content:center;
-    background:#111;
-    padding:10px;
-    border-bottom:1px solid #333;
-    box-shadow:0 4px 18px rgba(0,0,0,0.35);
-    max-width:100%;
+    background:rgba(17,17,17,0.24);
+    padding:12px 14px;
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:18px;
+    box-shadow:0 12px 40px rgba(0,0,0,0.18);
+    backdrop-filter:blur(14px);
+    width:min(920px, calc(100% - 32px));
 }
 
 .loginInput,
@@ -130,9 +162,11 @@ h1{
 }
 
 .homeLink{
-    position:absolute;
-    top:90px;
-    left:20px;
+    position:relative;
+    align-self:flex-start;
+    left:auto;
+    top:auto;
+    margin-left:20px;
     padding:9px 13px;
     border:1px solid #555;
     border-radius:9px;
@@ -141,6 +175,7 @@ h1{
     background:#171717;
     box-shadow:0 0 8px rgba(255,255,255,0.15);
     transition:0.2s;
+    width:auto;
 }
 .homeLink:hover{
     transform:scale(1.06);
@@ -149,11 +184,11 @@ h1{
 }
 
 .addBox{
-    position:fixed;
-    left:50%;
+    position:relative;
+    left:auto;
     right:auto;
-    top:150px;
-    transform:translateX(-50%);
+    top:auto;
+    transform:none;
     display:flex;
     gap:6px;
     align-items:center;
@@ -538,27 +573,31 @@ button:active{
 }
 
 @media (max-width: 700px){
-    body{padding-top:190px;}
+    .pageContent{top:320px;}
     h1{
-        margin:105px 16px 0;
+        margin:0 16px 12px;
         font-size:30px;
     }
+    .pageHeader{padding:8px 0 8px;}
     .topControls{
-        position:static;
+        position:relative;
         transform:none;
-        margin:0 auto 10px;
+        margin:0 auto;
         width:min(92vw,820px);
         justify-content:center;
     }
     .loginSection{
-        position:fixed;
-        top:0;
-        left:0;
-        right:0;
+        position:relative;
+        top:auto;
+        left:auto;
+        right:auto;
         justify-content:center;
-        width:100%;
-        border-radius:0 0 18px 18px;
-        padding:12px;
+        width:min(92vw,920px);
+        border-radius:18px;
+        padding:14px 12px;
+        background:rgba(17,17,17,0.22);
+        border:1px solid rgba(255,255,255,0.08);
+        backdrop-filter:blur(14px);
     }
     .loginSection input,
     .loginSection button,
@@ -570,8 +609,8 @@ button:active{
     .roulette{height:140px;margin:20px auto;}
     .pointer{height:140px;}
     .track{top:10px;}
-    .homeLink{left:12px;top:12px;}
-    .addBox{left:50%;top:150px;transform:translateX(-50%);}    
+    .homeLink{margin-left:12px;margin-bottom:4px;}
+    .addBox{margin-top:2px;}    
     .addInput{width:75px;}
     .bonusDrum{margin:-10px auto 20px;padding:10px;}
     .bonusSlots{gap:6px;}
@@ -664,30 +703,33 @@ input:disabled{
 
 <audio id="x25Sound" src="jackpot.mp3"></audio>
 
-<a class="homeLink" href="index.html">← В меню</a>
+<div class="pageHeader">
+    <a class="homeLink" href="index.html">← В меню</a>
 
-<div class="topControls">
-    <div class="balance">
-    💰 Баланс: <span id="balance">1500</span>
+    <div class="loginSection" id="loginSection">
+        <input class="loginInput" id="loginInput" type="text" maxlength="16" placeholder="Логин">
+        <input class="loginPinInput" id="loginPinInput" type="password" maxlength="4" placeholder="Код">
+        <button class="loginBtn" id="loginBtn" type="button" onclick="loginAccount()">Войти</button>
+        <button class="registerBtn" id="registerBtn" type="button" onclick="registerAccount()">Зарегистрироваться</button>
+        <div class="loginGreeting" id="loginGreeting" hidden></div>
+        <button class="logoutBtn" id="logoutBtn" type="button" onclick="logoutLogin()" hidden>Выйти</button>
     </div>
-    <button class="addToggle" id="addToggle" type="button" onclick="toggleAddBox()" aria-label="Пополнить баланс" aria-expanded="false">＋</button>
+
+    <div class="topControls">
+        <div class="balance">
+        💰 Баланс: <span id="balance">1500</span>
+        </div>
+        <button class="addToggle" id="addToggle" type="button" onclick="toggleAddBox()" aria-label="Пополнить баланс" aria-expanded="false">＋</button>
+    </div>
+
+    <div class="addBox" id="addBox" hidden>
+        <input class="addInput" id="addInput" type="number" min="1" max="10000" step="1" placeholder="Сумма">
+        <button class="addBtn" onclick="addMoney()">Добавить</button>
+    </div>
 </div>
 
-<div class="loginSection" id="loginSection">
-    <input class="loginInput" id="loginInput" type="text" maxlength="16" placeholder="Логин">
-    <input class="loginPinInput" id="loginPinInput" type="password" maxlength="4" placeholder="Код">
-    <button class="loginBtn" id="loginBtn" type="button" onclick="loginAccount()">Войти</button>
-    <button class="registerBtn" id="registerBtn" type="button" onclick="registerAccount()">Зарегистрироваться</button>
-    <div class="loginGreeting" id="loginGreeting" hidden></div>
-    <button class="logoutBtn" id="logoutBtn" type="button" onclick="logoutLogin()" hidden>Выйти</button>
-</div>
-
-<div class="addBox" id="addBox" hidden>
-    <input class="addInput" id="addInput" type="number" min="1" max="10000" step="1" placeholder="Сумма">
-    <button class="addBtn" onclick="addMoney()">Добавить</button>
-</div>
-
-<h1>🎰 Рулетка Роника! 🎰</h1>
+<div class="pageContent">
+    <h1>🎰 Рулетка Роника! 🎰</h1>
 
 <div class="roundTimer">До следующей рулетки: <span id="roundTimer">20.00</span> сек.</div>
 
@@ -1403,11 +1445,12 @@ function update(){
     }
 }
 
-create();
-update();
-renderLoginState();
-scheduleNextRound();
+    create();
+    update();
+    renderLoginState();
+    scheduleNextRound();
 </script>
+</div>
 
 </body>
 </html>

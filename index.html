@@ -10,10 +10,8 @@
     body{
         min-height:100vh;
         margin:0;
-        padding-top:140px;
-        display:grid;
-        place-items:center;
-        overflow:hidden;
+        padding:0 0 40px;
+        overflow-x:hidden;
         color:#fff;
         font-family:Arial,sans-serif;
         text-align:center;
@@ -22,11 +20,25 @@
             linear-gradient(160deg,#070707,#1c1200 55%,#080808);
     }
 
-    .loginSection{
-        position:fixed;
+    .pageHeader{
+        position:sticky;
         top:0;
-        left:0;
-        right:0;
+        z-index:50;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        gap:10px;
+        padding:10px 0 6px;
+        background:linear-gradient(180deg,rgba(7,7,7,0.96),rgba(7,7,7,0.86));
+        backdrop-filter:blur(6px);
+        box-shadow:0 4px 18px rgba(0,0,0,0.35);
+    }
+
+    .loginSection{
+        position:relative;
+        top:auto;
+        left:auto;
+        right:auto;
         z-index:10;
         display:flex;
         flex-wrap:wrap;
@@ -34,8 +46,10 @@
         justify-content:center;
         padding:10px;
         background:#111;
-        border-bottom:1px solid #333;
+        border:1px solid #333;
+        border-radius:14px;
         box-shadow:0 4px 18px rgba(0,0,0,0.35);
+        width:min(920px, calc(100% - 24px));
     }
 
     .loginInput,
@@ -67,18 +81,18 @@
     .registerBtn{ background:linear-gradient(90deg,#ffae00,#ff6b00); }
     .logoutBtn{ background:linear-gradient(90deg,#ff4b4b,#c70000); }
 
-    main{ width:min(920px,calc(100% - 32px)); }
+    main{ width:min(920px,calc(100% - 32px)); margin:24px auto 0; }
 
     .topControls{
-        position:fixed;
-        top:98px;
-        left:50%;
+        position:relative;
+        top:auto;
+        left:auto;
         display:flex;
         flex-direction:row;
         align-items:center;
         gap:10px;
         justify-content:center;
-        transform:translateX(-50%);
+        transform:none;
         z-index:10;
     }
 
@@ -109,10 +123,10 @@
     }
 
     .addBox{
-        position:fixed;
-        left:50%;
-        top:150px;
-        transform:translateX(-50%);
+        position:relative;
+        left:auto;
+        top:auto;
+        transform:none;
         display:flex;
         gap:6px;
         align-items:center;
@@ -291,10 +305,10 @@
     .play{ padding:10px 20px; border-radius:10px; font-weight:bold; background:#c78300; }
 
     @media (max-width:700px){
-        body{padding-top:230px;}
-        .topControls{position:static; transform:none; margin:0 auto 10px; width:min(92vw,820px);}
+        .pageHeader{padding:8px 0 6px;}
+        .topControls{margin:0 auto 0; width:min(92vw,820px);}
         .balance{font-size:16px;}
-        .loginSection{position:fixed; top:0; padding:12px 8px; gap:6px;}
+        .loginSection{padding:12px 8px; gap:6px; width:min(92vw,920px);}
         .loginSection input, .loginSection button, .loginGreeting{flex:1 1 100%;}
         .loginInput, .loginPinInput, .loginBtn, .registerBtn, .logoutBtn{max-width:100%; width:100%;}
         .subtitle{margin-bottom:20px;}
@@ -304,21 +318,23 @@
 </style>
 </head>
 <body>
-<div class="topControls">
-    <div class="balance">💰 Баланс: <span id="balance">1500</span></div>
-    <button class="addToggle" id="addToggle" type="button" onclick="toggleAddBox()" aria-label="Пополнить баланс" aria-expanded="false">＋</button>
-</div>
-<div class="loginSection" id="loginSection">
-    <input class="loginInput" id="loginInput" type="text" maxlength="16" placeholder="Логин">
-    <input class="loginPinInput" id="loginPinInput" type="password" maxlength="4" placeholder="Код">
-    <button class="loginBtn" id="loginBtn" type="button" onclick="loginAccount()">Войти</button>
-    <button class="registerBtn" id="registerBtn" type="button" onclick="registerAccount()">Зарегистрироваться</button>
-    <div class="loginGreeting" id="loginGreeting" hidden></div>
-    <button class="logoutBtn" id="logoutBtn" type="button" onclick="logoutLogin()" hidden>Выйти</button>
-</div>
-<div class="addBox" id="addBox" hidden>
-    <input class="addInput" id="addInput" type="number" min="1" max="10000" step="1" placeholder="Сумма">
-    <button class="addBtn" type="button" onclick="addMoney()">Добавить</button>
+<div class="pageHeader">
+    <div class="loginSection" id="loginSection">
+        <input class="loginInput" id="loginInput" type="text" maxlength="16" placeholder="Логин">
+        <input class="loginPinInput" id="loginPinInput" type="password" maxlength="4" placeholder="Код">
+        <button class="loginBtn" id="loginBtn" type="button" onclick="loginAccount()">Войти</button>
+        <button class="registerBtn" id="registerBtn" type="button" onclick="registerAccount()">Зарегистрироваться</button>
+        <div class="loginGreeting" id="loginGreeting" hidden></div>
+        <button class="logoutBtn" id="logoutBtn" type="button" onclick="logoutLogin()" hidden>Выйти</button>
+    </div>
+    <div class="topControls">
+        <div class="balance">💰 Баланс: <span id="balance">1500</span></div>
+        <button class="addToggle" id="addToggle" type="button" onclick="toggleAddBox()" aria-label="Пополнить баланс" aria-expanded="false">＋</button>
+    </div>
+    <div class="addBox" id="addBox" hidden>
+        <input class="addInput" id="addInput" type="number" min="1" max="10000" step="1" placeholder="Сумма">
+        <button class="addBtn" type="button" onclick="addMoney()">Добавить</button>
+    </div>
 </div>
 <div class="passModal" id="passModal" hidden>
     <div class="passDialog">
