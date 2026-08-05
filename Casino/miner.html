@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ronik Casino — Минёр</title>
+<style>
+    *{ box-sizing:border-box; }
+    body{
+        min-height:100vh;
+        margin:0;
+        display:grid;
+        place-items:center;
+        color:#fff;
+        font-family:Arial,sans-serif;
+        text-align:center;
+        background:radial-gradient(circle at 50% 0%,rgba(255,180,0,.16),transparent 35%),linear-gradient(160deg,#070707,#1a1a1a,#080808);
+    }
+    .balance,.homeLink{
+        position:fixed;
+        top:0;
+        padding:9px 14px;
+        border:1px solid #555;
+        border-radius:10px;
+        background:#111;
+        box-shadow:0 0 10px rgba(255,255,255,.18);
+    }
+    .balance{ left:50%; transform:translateX(-50%); }
+    .homeLink{ left:20px; color:#fff; text-decoration:none; }
+    .homeLink:hover{ border-color:#ffcc00; }
+    main{ width:min(560px,calc(100% - 32px)); padding:42px 24px; border:2px solid #745400; border-radius:24px; background:#151515; box-shadow:0 0 30px rgba(255,180,0,.18); }
+    h1{ margin:0 0 16px; color:#ffd633; font-size:clamp(36px,8vw,58px); }
+    p{ margin:0; color:#d0d0d0; font-size:18px; }
+    @media (max-width:700px){
+        .balance{ position:static; left:auto; transform:none; margin:10px auto; }
+        .homeLink{ position:static; top:auto; left:auto; margin:10px; }
+        main{ margin-top:20px; width:calc(100% - 32px); }
+    }
+</style>
+</head>
+<body>
+<a class="homeLink" href="index.html">← В меню</a>
+<div class="balance">💰 Баланс: <span id="balance">1500</span></div>
+<main>
+    <h1>⛏️ Минёр</h1>
+    <p>Режим готовится. Скоро здесь появится новая игра.</p>
+</main>
+<script>
+    const savedLogin=localStorage.getItem("ronikCasinoLogin") || "";
+    const balanceKey = savedLogin ? "ronikCasinoBalance:" + savedLogin : "ronikCasinoBalance";
+    const savedBalance=Number(localStorage.getItem(balanceKey));
+    document.getElementById("balance").textContent=Number.isFinite(savedBalance) ? savedBalance : 1500;
+</script>
+</body>
+</html>
