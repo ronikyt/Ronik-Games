@@ -400,7 +400,7 @@
     function revealCell(index,cell){
         if(!gameActive || openedCells.has(index)) return;
         if(minePositions.has(index)){
-            if(typeof navigator!="undefined" && typeof navigator.vibrate==="function") navigator.vibrate(60);
+            if(typeof navigator!="undefined" && typeof navigator.vibrate==="function") navigator.vibrate([100,40,100]);
             playMineSound();
             gameActive=false;
             cell.classList.add("mine","hit");
