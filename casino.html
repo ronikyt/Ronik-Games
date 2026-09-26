@@ -408,23 +408,57 @@ button:active{
 }
 
 @media (max-width: 700px){
-    .pageContent{margin-top:20px;}
+    .pageContent{margin-top:0;padding-top:6px;}
     h1{
         margin:0 16px 12px;
         font-size:30px;
     }
-    .pageHeader{padding:8px 0 8px;}
-    .topControls{
+    .pageHeader{
+        box-sizing:border-box;
         position:relative;
-        transform:none;
-        margin:0 auto;
-        width:min(92vw,820px);
-        justify-content:center;
+        flex-direction:row;
+        justify-content:stretch;
+        gap:8px;
+        padding:8px 12px;
+        min-height:56px;
     }
+    .homeLink{
+        position:absolute;
+        left:12px;
+        top:50%;
+        margin:0;
+        padding:8px 10px;
+        font-size:14px;
+        transform:translateY(-50%);
+    }
+    .homeLink:hover{transform:translateY(-50%) scale(1.04);}
+    .topControls{
+        position:absolute;
+        top:50%;
+        left:calc(50% + (100vw - 100%)/2);
+        display:flex;
+        align-items:center;
+        gap:6px;
+        transform:translate(-50%,-50%);
+        pointer-events:none;
+    }
+    .topControls > *{pointer-events:auto;}
+    .balance{min-width:0;padding:8px 10px;font-size:14px;}
+    .addToggle{flex:0 0 38px;width:38px;height:38px;}
     .roulette{height:140px;margin:20px auto;}
     .pointer{height:140px;}
     .track{top:10px;}
-    .homeLink{margin-left:12px;margin-bottom:4px;}
+}
+
+@media (max-width: 400px){
+    .homeLink{left:8px;padding:7px 6px;font-size:12px;}
+}
+
+@media (max-width: 340px){
+    .pageHeader{padding-right:8px;padding-left:8px;}
+    .topControls{gap:4px;}
+    .balance{padding:7px 7px;font-size:12px;}
+    .addToggle{width:34px;height:34px;}
 }
 
 button:hover{
@@ -569,7 +603,7 @@ input:disabled{
 
 <button id="redBtn" class="redBtn" onclick="choose('red')">x2</button>
 <button id="blackBtn" class="blackBtn" onclick="choose('black')">x2</button>
-<button id="greenBtn" class="greenBtn" onclick="choose('green')">x25</button>
+<button id="greenBtn" class="greenBtn" onclick="choose('green')">x20</button>
 <button id="coinBtn" class="coinBtn" onclick="choose('coin')">🪙</button>
 
 <br>
@@ -731,7 +765,6 @@ function playWinSound(color){
         setTimeout(()=>playTone(note,0.2,0.055),index*110);
     });
 }
-
 function getColorIcon(color){
     return color==="red" ? "🔴" : color==="black" ? "⚫" : color==="green" ? "💚" : "🪙";
 }
@@ -743,7 +776,7 @@ function getCoinIcon(side){
 function flipCoin(highSide){
     const side=Math.random()<0.5 ? "red" : "blue";
     const multiplier=side===highSide ?
-        Math.floor(Math.random()*11)+10 : Math.floor(Math.random()*10)+1;
+        Math.floor(Math.random()*9)+8 : Math.floor(Math.random()*8)+1;
     return {side,multiplier};
 }
 
@@ -964,9 +997,9 @@ function finishMainRound(resultColor,closest,money,betColor,bet,coinResult){
     updateHistory(resultColor);
 
     if(hasWinningBet){
-        const colorMultiplier=resultColor==="green"?25:2;
+        const colorMultiplier=resultColor==="green"?20:2;
         const multiplier=coinResult ? coinResult.multiplier : colorMultiplier;
-        const winAmount=money*multiplier;
+        const winAmount=Math.floor(money*multiplier);
 
         if(resultColor==="green"){
             x25Sound.currentTime=0;

@@ -9,26 +9,57 @@
     body{
         min-height:100vh;
         margin:0;
-        display:grid;
-        place-items:center;
+        padding:72px 20px 40px;
         color:#fff;
         font-family:Arial,sans-serif;
         text-align:center;
         background:radial-gradient(circle at 50% 0%,rgba(255,180,0,.16),transparent 35%),linear-gradient(160deg,#070707,#1a1a1a,#080808);
     }
-    .balance,.homeLink{
-        position:fixed;
-        top:0;
-        padding:9px 14px;
-        border:1px solid #555;
-        border-radius:10px;
-        background:#111;
-        box-shadow:0 0 10px rgba(255,255,255,.18);
+    .topBar{
+        position:relative;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:12px;
+        width:min(920px,100%);
+        margin:0 auto 24px;
     }
-    .balanceRow{ position:fixed; top:0; left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:8px; z-index:5; }
-    .balance{ position:static; }
-    .homeLink{ left:20px; color:#fff; text-decoration:none; }
-    .homeLink:hover{ border-color:#ffcc00; }
+    .balance{
+        position:static;
+        display:inline-flex;
+        align-items:center;
+        gap:8px;
+        min-width:120px;
+        max-width:240px;
+        padding:8px 14px;
+        border:1px solid rgba(255,255,255,.08);
+        border-radius:999px;
+        background:rgba(12,12,12,.96);
+        color:#fff;
+        font-size:15px;
+        line-height:1.1;
+        white-space:nowrap;
+        box-shadow:0 12px 30px rgba(0,0,0,.35);
+        transition:transform .2s,box-shadow .2s;
+    }
+    .balance:hover{ transform:scale(1.02); box-shadow:0 14px 34px rgba(0,0,0,.45); }
+    .homeLink{
+        display:inline-flex;
+        align-items:center;
+        min-height:36px;
+        padding:8px 13px;
+        border:1px solid #555;
+        border-radius:9px;
+        background:#171717;
+        color:#fff;
+        text-decoration:none;
+        white-space:nowrap;
+        box-shadow:0 0 8px rgba(255,255,255,.15);
+        transition:.2s;
+    }
+    .balanceRow{ display:flex; align-items:center; gap:8px; flex-shrink:0; }
+    .homeLink{ position:absolute; left:0; }
+    .homeLink:hover{ border-color:#ffcc00; box-shadow:0 0 12px rgba(255,204,0,.35); }
     .addToggle{
         width:40px;
         height:40px;
@@ -52,22 +83,105 @@
     .passCancel,.passConfirm{ padding:10px; border:0; border-radius:10px; color:#fff; cursor:pointer; }
     .passCancel{ background:#444; }
     .passConfirm{ background:linear-gradient(180deg,#00cc00,#009900); }
-    main{ width:min(560px,calc(100% - 32px)); padding:42px 24px; border:2px solid #745400; border-radius:24px; background:#151515; box-shadow:0 0 30px rgba(255,180,0,.18); }
-    h1{ margin:0 0 16px; color:#ffd633; font-size:clamp(36px,8vw,58px); }
-    p{ margin:0; color:#d0d0d0; font-size:18px; }
+    main{ width:min(920px,100%); margin:0 auto; }
+    h1{ margin:0 0 8px; color:#ffd633; font-size:36px; }
+    .subtitle{ margin:0 0 26px; color:#aaa; font-size:15px; }
+    .gameLayout{ display:grid; grid-template-columns:minmax(0,1fr) 250px; gap:20px; align-items:start; }
+    .board{
+        display:grid;
+        grid-template-columns:repeat(5,minmax(0,1fr));
+        gap:9px;
+        width:100%;
+        aspect-ratio:1;
+        padding:12px;
+        border:1px solid #383838;
+        border-radius:14px;
+        background:#101010;
+        box-shadow:0 12px 36px rgba(0,0,0,.34);
+    }
+    .cell{
+        min-width:0;
+        aspect-ratio:1;
+        padding:0;
+        border:1px solid #564514;
+        border-radius:9px;
+        background:linear-gradient(145deg,#3b3218,#28220f);
+        color:#ffe36b;
+        font-size:clamp(20px,5vw,36px);
+        cursor:pointer;
+        box-shadow:inset 0 1px rgba(255,255,255,.08),0 3px 8px rgba(0,0,0,.25);
+        transition:transform .15s,border-color .15s,background .15s;
+    }
+    .cell:hover:not(:disabled){ transform:translateY(-2px); border-color:#ffd633; background:#51441c; }
+    .cell:disabled{ cursor:default; opacity:1; }
+    .cell.safe{ border-color:#167c58; background:linear-gradient(145deg,#0e6548,#104631); }
+    .cell.mine{ border-color:#9d3030; background:linear-gradient(145deg,#741e1e,#451414); }
+    .cell.hit{ box-shadow:0 0 18px rgba(255,65,65,.65); }
+    .betPanel{ padding:18px; border:1px solid #383838; border-radius:12px; background:#151515; text-align:left; }
+    .panelTitle{ margin:0 0 16px; color:#f3cc45; font-size:17px; }
+    .fieldLabel{ display:block; margin:14px 0 7px; color:#aaa; font-size:13px; }
+    .controlInput{
+        box-sizing:border-box;
+        width:100%;
+        height:44px;
+        padding:0 12px;
+        border:1px solid #454545;
+        border-radius:8px;
+        outline:none;
+        background:#0e0e0e;
+        color:#fff;
+        font-size:16px;
+    }
+    .controlInput:focus{ border-color:#e4b82e; box-shadow:0 0 0 2px rgba(228,184,46,.14); }
+    .gameStats{ display:grid; gap:10px; margin:18px 0; padding-top:14px; border-top:1px solid #333; }
+    .statRow{ display:flex; justify-content:space-between; gap:8px; color:#aaa; font-size:13px; }
+    .statValue{ color:#fff; font-weight:700; }
+    .statValue.multiplier{ color:#6de4ae; font-size:17px; }
+    .gameAction{
+        width:100%;
+        min-height:48px;
+        padding:10px 12px;
+        border:0;
+        border-radius:8px;
+        background:linear-gradient(180deg,#ffc72c,#ed8e00);
+        color:#211700;
+        font-size:15px;
+        font-weight:800;
+        cursor:pointer;
+    }
+    .gameAction:disabled{ cursor:not-allowed; opacity:.45; }
+    .gameStatus{ min-height:38px; margin:14px 0 0; color:#bbb; font-size:13px; line-height:1.45; }
+    .gameStatus.win{ color:#6de4ae; }
+    .gameStatus.lose{ color:#ff7575; }
+    .passDialog{ color:#fff; }
     @media (max-width:700px){
-        .balanceRow{ position:static; left:auto; transform:none; margin:10px auto; }
-        .homeLink{ position:static; top:auto; left:auto; margin:10px; }
-        main{ margin-top:20px; width:calc(100% - 32px); }
+        body{ padding:12px 12px 30px; }
+        .topBar{ gap:6px; margin-bottom:20px; }
+        .homeLink{ padding:8px 10px; font-size:14px; }
+        .balanceRow{ gap:6px; }
+        .balance{ min-width:0; padding:8px 10px; font-size:14px; }
+        .addToggle{ flex:0 0 38px; width:38px; height:38px; }
+        main{ margin-top:12px; width:100%; }
+        .gameLayout{ grid-template-columns:1fr; gap:14px; }
+        .board{ gap:6px; padding:8px; }
+        .betPanel{ padding:15px; }
+        .gameStats{ grid-template-columns:1fr 1fr; }
+    }
+    @media (max-width:400px){
+        .topBar{ display:grid; grid-template-columns:1fr; gap:10px; }
+        .homeLink{ position:static; justify-self:start; }
+        .balanceRow{ justify-self:center; }
     }
 </style>
 </head>
 <body>
+<header class="topBar">
 <a class="homeLink" href="index.html">← В меню</a>
 <div class="balanceRow">
     <div class="balance">💰 Баланс: <span id="balance">1500</span></div>
     <button class="addToggle" type="button" onclick="openTopUp()" aria-label="Пополнить баланс" title="Пополнить баланс">＋</button>
 </div>
+</header>
 <div class="passModal" id="passModal" hidden>
     <div class="passDialog" role="dialog" aria-modal="true" aria-labelledby="passTitle">
         <h2 id="passTitle">Пополнение баланса</h2>
@@ -91,7 +205,24 @@
 </div>
 <main>
     <h1>⛏️ Минёр</h1>
-    <p>Режим готовится. Скоро здесь появится новая игра.</p>
+    <p class="subtitle">Открывай кристаллы, избегай мин и забирай выигрыш вовремя.</p>
+    <div class="gameLayout">
+        <div class="board" id="board" role="group" aria-label="Игровое поле 5 на 5"></div>
+        <aside class="betPanel" aria-label="Настройки игры">
+            <h2 class="panelTitle">Параметры ставки</h2>
+            <label class="fieldLabel" for="betAmount">Ставка</label>
+            <input class="controlInput" id="betAmount" type="number" min="1" step="1" value="100">
+            <label class="fieldLabel" for="mineCount">Количество мин (1–24)</label>
+            <input class="controlInput" id="mineCount" type="number" min="1" max="24" step="1" value="5" inputmode="numeric">
+            <div class="gameStats" aria-live="polite">
+                <div class="statRow"><span>Открыто</span><span class="statValue" id="safeCount">0</span></div>
+                <div class="statRow"><span>Коэффициент</span><span class="statValue multiplier" id="multiplier">x1.00</span></div>
+                <div class="statRow"><span>Можно забрать</span><span class="statValue" id="potentialWin">0</span></div>
+            </div>
+            <button class="gameAction" id="gameAction" type="button" onclick="handleGameAction()">Начать игру</button>
+            <p class="gameStatus" id="gameStatus" aria-live="polite">Выбери ставку и количество мин.</p>
+        </aside>
+    </div>
 </main>
 <script>
     function loadBalance(){
@@ -116,6 +247,222 @@
     function updateBalance(){
         document.getElementById("balance").textContent=loadBalance();
     }
+
+    const boardElement=document.getElementById("board");
+    const mineSelect=document.getElementById("mineCount");
+    const actionButton=document.getElementById("gameAction");
+    const BOARD_SIZE=25;
+    const HOUSE_FACTOR=0.90;
+    const HIGH_RISK_FACTOR=0.75;
+    let gameActive=false;
+    let minePositions=new Set();
+    let openedCells=new Set();
+    let currentStake=0;
+    let currentMultiplier=1;
+    let soundContext=null;
+
+    function getSoundContext(){
+        const AudioContextClass=window.AudioContext||window.webkitAudioContext;
+        if(!AudioContextClass) return null;
+        if(!soundContext) soundContext=new AudioContextClass();
+        if(soundContext.state==="suspended") soundContext.resume();
+        return soundContext;
+    }
+
+    function playDiamondSound(){
+        const context=getSoundContext();
+        if(!context) return;
+        const start=context.currentTime;
+        [659.25,987.77,1318.51].forEach((frequency,index)=>{
+            const oscillator=context.createOscillator();
+            const gain=context.createGain();
+            const noteStart=start+index*0.065;
+            oscillator.type="sine";
+            oscillator.frequency.setValueAtTime(frequency,noteStart);
+            gain.gain.setValueAtTime(0.0001,noteStart);
+            gain.gain.exponentialRampToValueAtTime(0.055,noteStart+0.015);
+            gain.gain.exponentialRampToValueAtTime(0.0001,noteStart+0.24);
+            oscillator.connect(gain);
+            gain.connect(context.destination);
+            oscillator.start(noteStart);
+            oscillator.stop(noteStart+0.25);
+        });
+    }
+
+    function playMineSound(){
+        const context=getSoundContext();
+        if(!context) return;
+        const duration=0.16;
+        const buffer=context.createBuffer(1,Math.floor(context.sampleRate*duration),context.sampleRate);
+        const samples=buffer.getChannelData(0);
+        for(let index=0;index<samples.length;index++){
+            const decay=1-index/samples.length;
+            samples[index]=(Math.random()*2-1)*decay*decay*0.45;
+        }
+
+        const noise=context.createBufferSource();
+        const filter=context.createBiquadFilter();
+        const noiseGain=context.createGain();
+        noise.buffer=buffer;
+        filter.type="lowpass";
+        filter.frequency.setValueAtTime(420,context.currentTime);
+        noiseGain.gain.setValueAtTime(0.055,context.currentTime);
+        noiseGain.gain.exponentialRampToValueAtTime(0.0001,context.currentTime+duration);
+        noise.connect(filter);
+        filter.connect(noiseGain);
+        noiseGain.connect(context.destination);
+        noise.start();
+
+        const thud=context.createOscillator();
+        const thudGain=context.createGain();
+        thud.type="sine";
+        thud.frequency.setValueAtTime(105,context.currentTime);
+        thud.frequency.exponentialRampToValueAtTime(58,context.currentTime+0.13);
+        thudGain.gain.setValueAtTime(0.12,context.currentTime);
+        thudGain.gain.exponentialRampToValueAtTime(0.0001,context.currentTime+0.15);
+        thud.connect(thudGain);
+        thudGain.connect(context.destination);
+        thud.start();
+        thud.stop(context.currentTime+0.16);
+    }
+
+    function createBoard(){
+        boardElement.replaceChildren();
+        for(let index=0;index<BOARD_SIZE;index++){
+            const cell=document.createElement("button");
+            cell.type="button";
+            cell.className="cell";
+            cell.setAttribute("aria-label","Закрытая клетка "+(index+1));
+            cell.addEventListener("click",()=>revealCell(index,cell));
+            boardElement.appendChild(cell);
+        }
+    }
+
+    function setStatus(message,state=""){
+        const status=document.getElementById("gameStatus");
+        status.textContent=message;
+        status.className="gameStatus"+(state ? " "+state : "");
+    }
+
+    function renderStats(){
+        const mineCount=gameActive ? minePositions.size : Number(mineSelect.value);
+        const openedCount=gameActive ? openedCells.size : 0;
+        document.getElementById("safeCount").textContent=openedCount+" / "+(BOARD_SIZE-mineCount);
+        document.getElementById("multiplier").textContent="x"+currentMultiplier.toFixed(2);
+        document.getElementById("potentialWin").textContent=String(Math.floor(currentStake*currentMultiplier));
+    }
+
+    function calculateMultiplier(safePicks,mineCount){
+        let survivalProbability=1;
+        for(let pick=0;pick<safePicks;pick++){
+            survivalProbability*=(BOARD_SIZE-mineCount-pick)/(BOARD_SIZE-pick);
+        }
+        const payoutFactor=mineCount>=10 ? HIGH_RISK_FACTOR : HOUSE_FACTOR;
+        return payoutFactor/survivalProbability;
+    }
+
+    function startGame(){
+        const stake=Number(document.getElementById("betAmount").value);
+        const mineCount=Number(mineSelect.value);
+        const balance=loadBalance();
+        if(!Number.isSafeInteger(stake) || stake<=0){
+            setStatus("Ставка должна быть целым числом больше нуля.","lose");
+            return;
+        }
+        if(stake>balance){
+            setStatus("Недостаточно средств для этой ставки.","lose");
+            return;
+        }
+        if(!Number.isSafeInteger(mineCount) || mineCount<1 || mineCount>24){
+            setStatus("Количество мин должно быть целым числом от 1 до 24.","lose");
+            return;
+        }
+
+        currentStake=stake;
+        currentMultiplier=1;
+        openedCells=new Set();
+        minePositions=new Set();
+        while(minePositions.size<mineCount){
+            minePositions.add(Math.floor(Math.random()*BOARD_SIZE));
+        }
+        localStorage.setItem("ronikCasinoBalance",String(balance-stake));
+        updateBalance();
+        gameActive=true;
+        document.getElementById("betAmount").disabled=true;
+        mineSelect.disabled=true;
+        actionButton.textContent="Открой клетку";
+        actionButton.disabled=true;
+        createBoard();
+        renderStats();
+        setStatus("Ставка принята. Открывай клетки или забирай выигрыш.");
+    }
+
+    function revealCell(index,cell){
+        if(!gameActive || openedCells.has(index)) return;
+        if(minePositions.has(index)){
+            playMineSound();
+            gameActive=false;
+            cell.classList.add("mine","hit");
+            cell.textContent="💣";
+            cell.setAttribute("aria-label","Мина");
+            boardElement.querySelectorAll(".cell").forEach((otherCell,otherIndex)=>{
+                otherCell.disabled=true;
+                if(minePositions.has(otherIndex) && otherIndex!==index){
+                    otherCell.classList.add("mine");
+                    otherCell.textContent="💣";
+                }
+            });
+            document.getElementById("betAmount").disabled=false;
+            mineSelect.disabled=false;
+            currentStake=0;
+            currentMultiplier=0;
+            actionButton.textContent="Начать игру";
+            actionButton.disabled=false;
+            renderStats();
+            setStatus("Мина! Ставка проиграна.","lose");
+            return;
+        }
+
+        openedCells.add(index);
+        cell.disabled=true;
+        cell.classList.add("safe");
+        cell.textContent="💎";
+        playDiamondSound();
+        cell.setAttribute("aria-label","Безопасная клетка, изумруд");
+        currentMultiplier=calculateMultiplier(openedCells.size,minePositions.size);
+        actionButton.textContent="Забрать "+Math.floor(currentStake*currentMultiplier);
+        actionButton.disabled=false;
+        renderStats();
+        setStatus("Безопасно! Можешь продолжить или забрать выигрыш.","win");
+
+        if(openedCells.size===BOARD_SIZE-minePositions.size){
+            cashOut();
+        }
+    }
+
+    function cashOut(){
+        if(!gameActive || openedCells.size===0) return;
+        const payout=Math.floor(currentStake*currentMultiplier);
+        localStorage.setItem("ronikCasinoBalance",String(loadBalance()+payout));
+        updateBalance();
+        gameActive=false;
+        document.getElementById("betAmount").disabled=false;
+        mineSelect.disabled=false;
+        boardElement.querySelectorAll(".cell").forEach(cell=>cell.disabled=true);
+        actionButton.textContent="Начать игру";
+        renderStats();
+        setStatus("Выигрыш забран: "+payout+" монет (x"+currentMultiplier.toFixed(2)+").","win");
+    }
+
+    function handleGameAction(){
+        if(gameActive){
+            cashOut();
+            return;
+        }
+        startGame();
+    }
+
+    mineSelect.addEventListener("input",renderStats);
 
     function openTopUp(){
         document.getElementById("passwordStep").hidden=false;
@@ -161,6 +508,8 @@
         updateBalance();
     }
 
+    createBoard();
+    renderStats();
     updateBalance();
 </script>
 </body>
