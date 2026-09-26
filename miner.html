@@ -25,14 +25,38 @@
         background:#111;
         box-shadow:0 0 10px rgba(255,255,255,.18);
     }
-    .balance{ left:50%; transform:translateX(-50%); }
+    .balanceRow{ position:fixed; top:0; left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:8px; z-index:5; }
+    .balance{ position:static; }
     .homeLink{ left:20px; color:#fff; text-decoration:none; }
     .homeLink:hover{ border-color:#ffcc00; }
+    .addToggle{
+        width:40px;
+        height:40px;
+        padding:0;
+        border:1px solid rgba(255,204,0,.65);
+        border-radius:50%;
+        background:linear-gradient(135deg,#ffcf28,#ff8500);
+        color:#171000;
+        font-size:25px;
+        cursor:pointer;
+        box-shadow:0 0 14px rgba(255,180,0,.28);
+    }
+    .passModal{ position:fixed; inset:0; z-index:10000; display:flex; align-items:center; justify-content:center; padding:16px; background:rgba(0,0,0,.88); }
+    .passModal[hidden], .passDialog [hidden]{ display:none !important; }
+    .passDialog{ width:min(440px,calc(100vw - 32px)); padding:28px 24px; border:2px solid #ffcc00; border-radius:20px; background:linear-gradient(145deg,#171717,#333); box-shadow:0 0 32px rgba(255,204,0,.35); text-align:center; }
+    .passDialog h2{ margin:0 0 16px; color:#ffcc00; }
+    .passInput{ box-sizing:border-box; width:100%; margin:0 auto 10px; padding:12px; border:1px solid #444; border-radius:10px; background:#222; color:#fff; font-size:18px; text-align:center; }
+    .passError{ min-height:22px; margin-bottom:10px; color:#ff5a5a; font-size:14px; }
+    .passActions{ display:flex; justify-content:center; gap:12px; }
+    .passActions button{ width:calc(50% - 6px); max-width:170px; min-height:46px; margin:0; }
+    .passCancel,.passConfirm{ padding:10px; border:0; border-radius:10px; color:#fff; cursor:pointer; }
+    .passCancel{ background:#444; }
+    .passConfirm{ background:linear-gradient(180deg,#00cc00,#009900); }
     main{ width:min(560px,calc(100% - 32px)); padding:42px 24px; border:2px solid #745400; border-radius:24px; background:#151515; box-shadow:0 0 30px rgba(255,180,0,.18); }
     h1{ margin:0 0 16px; color:#ffd633; font-size:clamp(36px,8vw,58px); }
     p{ margin:0; color:#d0d0d0; font-size:18px; }
     @media (max-width:700px){
-        .balance{ position:static; left:auto; transform:none; margin:10px auto; }
+        .balanceRow{ position:static; left:auto; transform:none; margin:10px auto; }
         .homeLink{ position:static; top:auto; left:auto; margin:10px; }
         main{ margin-top:20px; width:calc(100% - 32px); }
     }
@@ -40,16 +64,104 @@
 </head>
 <body>
 <a class="homeLink" href="index.html">← В меню</a>
-<div class="balance">💰 Баланс: <span id="balance">1500</span></div>
+<div class="balanceRow">
+    <div class="balance">💰 Баланс: <span id="balance">1500</span></div>
+    <button class="addToggle" type="button" onclick="openTopUp()" aria-label="Пополнить баланс" title="Пополнить баланс">＋</button>
+</div>
+<div class="passModal" id="passModal" hidden>
+    <div class="passDialog" role="dialog" aria-modal="true" aria-labelledby="passTitle">
+        <h2 id="passTitle">Пополнение баланса</h2>
+        <div id="passwordStep">
+            <input class="passInput" id="passInput" type="password" autocomplete="off" placeholder="Пароль" onkeydown="if(event.key==='Enter') checkPassword()">
+            <div class="passError" id="passError" role="alert"></div>
+            <div class="passActions">
+                <button class="passCancel" type="button" onclick="closeTopUp()">Отмена</button>
+                <button class="passConfirm" type="button" onclick="checkPassword()">Продолжить</button>
+            </div>
+        </div>
+        <div id="amountStep" hidden>
+            <input class="passInput" id="addInput" type="number" min="1" max="10000" step="1" placeholder="Сумма">
+            <div class="passError" id="amountError" role="alert"></div>
+            <div class="passActions">
+                <button class="passCancel" type="button" onclick="closeTopUp()">Отмена</button>
+                <button class="passConfirm" type="button" onclick="addMoney()">Добавить</button>
+            </div>
+        </div>
+    </div>
+</div>
 <main>
     <h1>⛏️ Минёр</h1>
     <p>Режим готовится. Скоро здесь появится новая игра.</p>
 </main>
 <script>
-    const savedLogin=localStorage.getItem("ronikCasinoLogin") || "";
-    const balanceKey = savedLogin ? "ronikCasinoBalance:" + savedLogin : "ronikCasinoBalance";
-    const savedBalance=Number(localStorage.getItem(balanceKey));
-    document.getElementById("balance").textContent=Number.isFinite(savedBalance) ? savedBalance : 1500;
+    function loadBalance(){
+        const storedBalance=localStorage.getItem("ronikCasinoBalance");
+        if(storedBalance===null) return 1500;
+        const savedBalance=Number(storedBalance);
+        return Number.isSafeInteger(savedBalance) && savedBalance>=0 ? savedBalance : 1500;
+    }
+
+    const legacyLogin=localStorage.getItem("ronikCasinoLogin");
+    if(legacyLogin){
+        const legacyBalance=localStorage.getItem("ronikCasinoBalance:"+legacyLogin);
+        if(legacyBalance!==null && Number.isSafeInteger(Number(legacyBalance)) && Number(legacyBalance)>=0){
+            localStorage.setItem("ronikCasinoBalance",legacyBalance);
+        }
+        localStorage.removeItem("ronikCasinoLogin");
+    }
+
+    const TOP_UP_PASSWORD_HASH="7b2c97fce79ddcc9bd0b8fb8125ef5996620cf6ef930c2a9d06b848b58d9ca38";
+    let topUpAuthorized=false;
+
+    function updateBalance(){
+        document.getElementById("balance").textContent=loadBalance();
+    }
+
+    function openTopUp(){
+        document.getElementById("passwordStep").hidden=false;
+        document.getElementById("amountStep").hidden=true;
+        document.getElementById("passInput").value="";
+        document.getElementById("passError").textContent="";
+        document.getElementById("amountError").textContent="";
+        topUpAuthorized=false;
+        document.getElementById("passModal").hidden=false;
+        document.getElementById("passInput").focus();
+    }
+
+    function closeTopUp(){
+        document.getElementById("passModal").hidden=true;
+        topUpAuthorized=false;
+    }
+
+    async function checkPassword(){
+        const password=document.getElementById("passInput").value;
+        const digest=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(password));
+        const hash=[...new Uint8Array(digest)].map(value=>value.toString(16).padStart(2,"0")).join("");
+        if(hash!==TOP_UP_PASSWORD_HASH){
+            document.getElementById("passError").textContent="Неверный пароль";
+            document.getElementById("passInput").value="";
+            document.getElementById("passInput").focus();
+            return;
+        }
+        topUpAuthorized=true;
+        document.getElementById("passwordStep").hidden=true;
+        document.getElementById("amountStep").hidden=false;
+        document.getElementById("addInput").focus();
+    }
+
+    function addMoney(){
+        if(!topUpAuthorized) return;
+        const amount=Number(document.getElementById("addInput").value);
+        if(!Number.isSafeInteger(amount) || amount<=0 || amount>10000){
+            document.getElementById("amountError").textContent="Введите целое число от 1 до 10000";
+            return;
+        }
+        localStorage.setItem("ronikCasinoBalance",String(loadBalance()+amount));
+        closeTopUp();
+        updateBalance();
+    }
+
+    updateBalance();
 </script>
 </body>
 </html>

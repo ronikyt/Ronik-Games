@@ -34,53 +34,6 @@
         box-shadow:0 4px 18px rgba(0,0,0,0.35);
     }
 
-    .loginSection{
-        position:relative;
-        top:auto;
-        left:auto;
-        right:auto;
-        z-index:10;
-        display:flex;
-        flex-wrap:wrap;
-        gap:8px;
-        justify-content:center;
-        padding:10px;
-        background:#111;
-        border:1px solid #333;
-        border-radius:14px;
-        box-shadow:0 4px 18px rgba(0,0,0,0.35);
-        width:min(920px, calc(100% - 24px));
-    }
-
-    .loginInput,
-    .loginPinInput{
-        min-width:110px;
-        width:100%;
-        max-width:160px;
-        padding:8px 10px;
-        border-radius:10px;
-        border:1px solid #444;
-        background:#1a1a1a;
-        color:white;
-        font-size:14px;
-    }
-
-    .loginBtn,
-    .registerBtn,
-    .logoutBtn{
-        padding:10px 14px;
-        border:none;
-        border-radius:10px;
-        color:#fff;
-        font-size:14px;
-        cursor:pointer;
-        min-width:110px;
-    }
-
-    .loginBtn{ background:linear-gradient(90deg,#00cc00,#009900); }
-    .registerBtn{ background:linear-gradient(90deg,#ffae00,#ff6b00); }
-    .logoutBtn{ background:linear-gradient(90deg,#ff4b4b,#c70000); }
-
     main{ width:min(920px,calc(100% - 32px)); margin:24px auto 0; }
 
     .topControls{
@@ -95,6 +48,22 @@
         transform:none;
         z-index:10;
     }
+
+    .addToggle{
+        width:40px;
+        height:40px;
+        margin:0;
+        padding:0;
+        border:1px solid rgba(255,204,0,0.65);
+        border-radius:50%;
+        background:linear-gradient(135deg,#ffcf28,#ff8500);
+        color:#171000;
+        font-size:25px;
+        line-height:1;
+        cursor:pointer;
+        box-shadow:0 0 14px rgba(255,180,0,0.28);
+    }
+    .addToggle:hover{ transform:scale(1.06); }
 
     .balance{
         position:static;
@@ -120,145 +89,6 @@
     .balance:hover{
         transform:scale(1.02);
         box-shadow:0 14px 34px rgba(0,0,0,0.45);
-    }
-
-    .addBox{
-        position:relative;
-        left:auto;
-        top:auto;
-        transform:none;
-        display:flex;
-        gap:6px;
-        align-items:center;
-        z-index:10;
-    }
-
-    .addBox[hidden]{
-        display:none;
-    }
-
-    .addInput{
-        width:90px;
-        padding:5px 6px;
-        border-radius:7px;
-        border:1px solid #444;
-        background:#1a1a1a;
-        color:white;
-        font-size:13px;
-        text-align:center;
-        box-shadow:0 0 5px rgba(255,255,255,0.1);
-    }
-
-    .addBtn{
-        padding:5px 10px;
-        background:linear-gradient(90deg,#00cc00,#009900);
-        color:white;
-        border:0;
-        border-radius:7px;
-        cursor:pointer;
-        font-size:13px;
-        font-weight:bold;
-        box-shadow:0 0 7px rgba(0,255,0,0.4);
-        transition:0.2s;
-    }
-
-    .addBtn:hover{
-        transform:scale(1.08);
-        box-shadow:0 0 11px rgba(0,255,0,0.7);
-    }
-
-    .passModal{
-        position:fixed;
-        inset:0;
-        z-index:10000;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        background:rgba(0,0,0,0.88);
-    }
-
-    .passModal[hidden]{ display:none; }
-
-    .passDialog{
-        width:min(420px, calc(100vw - 32px));
-        padding:24px 18px;
-        border:2px solid #ffd700;
-        border-radius:20px;
-        background:linear-gradient(145deg,#171717,#333);
-        box-shadow:0 0 30px rgba(255,215,0,0.35);
-        text-align:center;
-    }
-
-    .passDialog h2{ margin:0 0 10px; color:#ffd700; }
-    .passDialog p{ margin:0 0 16px; color:#bbb; font-size:14px; }
-    .passInput{ width:100%; max-width:300px; margin:0 auto 12px; padding:12px; font-size:16px; border-radius:10px; text-align:center; background:#222; border:1px solid #444; color:white; box-shadow:0 0 8px rgba(255,255,255,0.1); }
-    .passError{ min-height:22px; color:#ff5a5a; font-size:14px; margin-bottom:10px; }
-    .passActions{ display:flex; gap:12px; justify-content:center; }
-    .passActions button{ width:calc(50% - 6px); height:44px; margin:0; font-size:14px; }
-    .passCancel{ background:linear-gradient(180deg,#555,#333); color:white; border:1px solid #777; }
-    .passConfirm{ background:linear-gradient(180deg,#00cc00,#009900); color:white; }
-
-    .addToggle{
-        width:36px;
-        height:36px;
-        display:inline-flex;
-        align-items:center;
-        justify-content:center;
-        padding:0;
-        background:linear-gradient(90deg,#00cc00,#009900);
-        color:white;
-        font-size:22px;
-        border:0;
-        border-radius:50%;
-        box-shadow:0 0 10px rgba(0,255,0,0.35);
-        cursor:pointer;
-    }
-
-    .addToggle:hover{
-        transform:scale(1.05);
-    }
-
-    .loginInput,
-    .loginPinInput{
-        min-width:110px;
-        width:100%;
-        max-width:160px;
-        padding:8px 10px;
-        border-radius:10px;
-        border:1px solid #444;
-        background:#1a1a1a;
-        color:white;
-        font-size:14px;
-    }
-
-    .loginInput{ min-width:140px; }
-    .loginPinInput{ width:90px; }
-
-    .loginBtn,
-    .registerBtn,
-    .logoutBtn{
-        padding:10px 14px;
-        border:none;
-        border-radius:10px;
-        color:#fff;
-        font-size:14px;
-        cursor:pointer;
-        min-width:110px;
-    }
-
-    .loginBtn{ background:linear-gradient(90deg,#00cc00,#009900); }
-    .registerBtn{ background:linear-gradient(90deg,#ffae00,#ff6b00); }
-    .logoutBtn{ background:linear-gradient(90deg,#ff4b4b,#c70000); }
-
-    .loginBtn:hover,
-    .registerBtn:hover,
-    .logoutBtn:hover{
-        transform:scale(1.05);
-    }
-
-    .loginGreeting{
-        font-size:14px;
-        color:#fff;
     }
 
     h1{
@@ -304,13 +134,49 @@
     .mode p{ margin:12px 0 20px; color:#d2d2d2; }
     .play{ padding:10px 20px; border-radius:10px; font-weight:bold; background:#c78300; }
 
+    .passModal{
+        position:fixed;
+        inset:0;
+        z-index:10000;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding:16px;
+        background:rgba(0,0,0,0.88);
+    }
+    .passModal[hidden], .passDialog [hidden]{ display:none !important; }
+    .passDialog{
+        width:min(440px, calc(100vw - 32px));
+        padding:28px 24px;
+        border:2px solid #ffcc00;
+        border-radius:20px;
+        background:linear-gradient(145deg,#171717,#333);
+        box-shadow:0 0 32px rgba(255,204,0,0.35);
+        text-align:center;
+    }
+    .passDialog h2{ margin:0 0 16px; color:#ffcc00; }
+    .passInput{
+        box-sizing:border-box;
+        width:100%;
+        margin:0 auto 10px;
+        padding:12px;
+        border:1px solid #444;
+        border-radius:10px;
+        background:#222;
+        color:#fff;
+        font-size:18px;
+        text-align:center;
+    }
+    .passError{ min-height:22px; margin-bottom:10px; color:#ff5a5a; font-size:14px; }
+    .passActions{ display:flex; justify-content:center; gap:12px; }
+    .passActions button{ width:calc(50% - 6px); max-width:170px; min-height:46px; margin:0; }
+    .passCancel{ background:#444; color:#fff; }
+    .passConfirm{ background:linear-gradient(180deg,#00cc00,#009900); color:#fff; }
+
     @media (max-width:700px){
         .pageHeader{padding:8px 0 6px;}
         .topControls{margin:0 auto 0; width:min(92vw,820px);}
         .balance{font-size:16px;}
-        .loginSection{padding:12px 8px; gap:6px; width:min(92vw,920px);}
-        .loginSection input, .loginSection button, .loginGreeting{flex:1 1 100%;}
-        .loginInput, .loginPinInput, .loginBtn, .registerBtn, .logoutBtn{max-width:100%; width:100%;}
         .subtitle{margin-bottom:20px;}
         .mode{min-height:220px;}
         .modes{gap:14px;}
@@ -319,44 +185,40 @@
 </head>
 <body>
 <div class="pageHeader">
-    <div class="loginSection" id="loginSection">
-        <input class="loginInput" id="loginInput" type="text" maxlength="16" placeholder="Логин">
-        <input class="loginPinInput" id="loginPinInput" type="password" maxlength="4" placeholder="Код">
-        <button class="loginBtn" id="loginBtn" type="button" onclick="loginAccount()">Войти</button>
-        <button class="registerBtn" id="registerBtn" type="button" onclick="registerAccount()">Зарегистрироваться</button>
-        <div class="loginGreeting" id="loginGreeting" hidden></div>
-        <button class="logoutBtn" id="logoutBtn" type="button" onclick="logoutLogin()" hidden>Выйти</button>
-    </div>
     <div class="topControls">
         <div class="balance">💰 Баланс: <span id="balance">1500</span></div>
-        <button class="addToggle" id="addToggle" type="button" onclick="toggleAddBox()" aria-label="Пополнить баланс" aria-expanded="false">＋</button>
-    </div>
-    <div class="addBox" id="addBox" hidden>
-        <input class="addInput" id="addInput" type="number" min="1" max="10000" step="1" placeholder="Сумма">
-        <button class="addBtn" type="button" onclick="addMoney()">Добавить</button>
+        <button class="addToggle" type="button" onclick="openTopUp()" aria-label="Пополнить баланс" title="Пополнить баланс">＋</button>
     </div>
 </div>
 <div class="passModal" id="passModal" hidden>
-    <div class="passDialog">
-        <h2>🔒 Введите пароль</h2>
-        <p>Требуется пароль администратора, обратитесь к админу что бы он пополнил ваш счёт!</p>
-        <input class="passInput" id="passInput" type="password" placeholder="Пароль" onkeydown="if(event.key==='Enter') checkPassword()">
-        <div class="passError" id="passError"></div>
-        <div class="passActions">
-            <button class="passCancel" type="button" onclick="closePasswordModal()">Отмена</button>
-            <button class="passConfirm" type="button" onclick="checkPassword()">Подтвердить</button>
+    <div class="passDialog" role="dialog" aria-modal="true" aria-labelledby="passTitle">
+        <h2 id="passTitle">Пополнение баланса</h2>
+        <div id="passwordStep">
+            <input class="passInput" id="passInput" type="password" autocomplete="off" placeholder="Пароль" onkeydown="if(event.key==='Enter') checkPassword()">
+            <div class="passError" id="passError" role="alert"></div>
+            <div class="passActions">
+                <button class="passCancel" type="button" onclick="closeTopUp()">Отмена</button>
+                <button class="passConfirm" type="button" onclick="checkPassword()">Продолжить</button>
+            </div>
+        </div>
+        <div id="amountStep" hidden>
+            <input class="passInput" id="addInput" type="number" min="1" max="10000" step="1" placeholder="Сумма">
+            <div class="passError" id="amountError" role="alert"></div>
+            <div class="passActions">
+                <button class="passCancel" type="button" onclick="closeTopUp()">Отмена</button>
+                <button class="passConfirm" type="button" onclick="addMoney()">Добавить</button>
+            </div>
         </div>
     </div>
 </div>
 <main>
     <h1>🎰 Ronik Casino</h1>
     <p class="subtitle">Выберите режим игры</p>
-
     <section class="modes" aria-label="Режимы игры">
         <a class="mode" href="casino.html">
             <div class="mode-icon">🎡</div>
             <h2>Рулетка Роника</h2>
-            <p>Ставки, бонус-барабан и монета удачи.</p>
+            <p>Ставки на цвета и монета удачи.</p>
             <span class="play">ИГРАТЬ</span>
         </a>
         <a class="mode" href="miner.html">
@@ -368,182 +230,74 @@
     </section>
 </main>
 <script>
-    const loginInput = document.getElementById("loginInput");
-    const loginPinInput = document.getElementById("loginPinInput");
-    const loginBtn = document.getElementById("loginBtn");
-    const registerBtn = document.getElementById("registerBtn");
-    const loginGreeting = document.getElementById("loginGreeting");
-    const logoutBtn = document.getElementById("logoutBtn");
-
-    const savedLogin = localStorage.getItem("ronikCasinoLogin") || "";
-    let login = savedLogin;
-
-    function getBalanceKey(name){
-        return "ronikCasinoBalance:" + name;
-    }
-
-    function getUserKey(name){
-        return "ronikCasinoUser:" + name;
-    }
-
     function loadBalance(){
-        if(login){
-            const savedBalance = Number(localStorage.getItem(getBalanceKey(login)));
-            return Number.isFinite(savedBalance) ? savedBalance : 1500;
+        const storedBalance = localStorage.getItem("ronikCasinoBalance");
+        if(storedBalance === null) return 1500;
+        const savedBalance = Number(storedBalance);
+        return Number.isSafeInteger(savedBalance) && savedBalance >= 0 ? savedBalance : 1500;
+    }
+
+    const legacyLogin = localStorage.getItem("ronikCasinoLogin");
+    if(legacyLogin){
+        const legacyBalance = localStorage.getItem("ronikCasinoBalance:" + legacyLogin);
+        if(legacyBalance !== null && Number.isSafeInteger(Number(legacyBalance)) && Number(legacyBalance) >= 0){
+            localStorage.setItem("ronikCasinoBalance", legacyBalance);
         }
-        const savedBalance = Number(localStorage.getItem("ronikCasinoBalance"));
-        return Number.isFinite(savedBalance) ? savedBalance : 1500;
-    }
-
-    function renderLoginState(){
-        if(login){
-            loginInput.hidden = true;
-            loginPinInput.hidden = true;
-            loginBtn.hidden = true;
-            registerBtn.hidden = true;
-            loginInput.style.display = "none";
-            loginPinInput.style.display = "none";
-            loginBtn.style.display = "none";
-            registerBtn.style.display = "none";
-            loginGreeting.hidden = false;
-            loginGreeting.style.display = "inline-flex";
-            logoutBtn.hidden = false;
-            logoutBtn.style.display = "inline-flex";
-            loginGreeting.textContent = "Привет, " + login;
-        } else {
-            loginInput.hidden = false;
-            loginPinInput.hidden = false;
-            loginBtn.hidden = false;
-            registerBtn.hidden = false;
-            loginInput.style.display = "inline-flex";
-            loginPinInput.style.display = "inline-flex";
-            loginBtn.style.display = "inline-flex";
-            registerBtn.style.display = "inline-flex";
-            loginGreeting.hidden = true;
-            loginGreeting.style.display = "none";
-            logoutBtn.hidden = true;
-            logoutBtn.style.display = "none";
-        }
-    }
-
-    function userExists(name){
-        return localStorage.getItem(getUserKey(name)) !== null;
-    }
-
-    function registerAccount(){
-        if(login) return;
-        const name = loginInput.value.trim();
-        const pin = loginPinInput.value.trim();
-        if(!name) return alert("Введите логин");
-        if(!/^\d{4}$/.test(pin)) return alert("Код должен быть 4 цифры");
-        if(userExists(name)) return alert("Такой логин уже занят");
-        localStorage.setItem(getUserKey(name), pin);
-        login = name;
-        localStorage.setItem("ronikCasinoLogin", login);
-        localStorage.setItem(getBalanceKey(login), 1500);
-        loginPinInput.value = "";
-        loginInput.value = name;
-        updateBalanceDisplay();
-        renderLoginState();
-        alert("Аккаунт создан. Привет, " + login);
-    }
-
-    function loginAccount(){
-        if(login) return;
-        const name = loginInput.value.trim();
-        const pin = loginPinInput.value.trim();
-        if(!name) return alert("Введите логин");
-        if(!/^\d{4}$/.test(pin)) return alert("Введите 4-значный код");
-        const savedPin = localStorage.getItem(getUserKey(name));
-        if(savedPin === null) return alert("Пользователь не найден");
-        if(savedPin !== pin) return alert("Неверный код");
-        login = name;
-        localStorage.setItem("ronikCasinoLogin", login);
-        updateBalanceDisplay();
-        renderLoginState();
-        alert("Вы вошли как " + login);
-    }
-
-    function logoutLogin(){
-        if(!login) return;
-        login = "";
         localStorage.removeItem("ronikCasinoLogin");
-        loginInput.value = "";
-        loginPinInput.value = "";
-        updateBalanceDisplay();
-        renderLoginState();
-        alert("Вы вышли из аккаунта.");
     }
 
     function updateBalanceDisplay(){
-        const balanceSpan = document.getElementById("balance");
-        const current = loadBalance();
-        balanceSpan.textContent = current;
+        document.getElementById("balance").textContent = loadBalance();
+    }
+
+    const TOP_UP_PASSWORD_HASH = "7b2c97fce79ddcc9bd0b8fb8125ef5996620cf6ef930c2a9d06b848b58d9ca38";
+    let topUpAuthorized = false;
+
+    function openTopUp(){
+        document.getElementById("passwordStep").hidden = false;
+        document.getElementById("amountStep").hidden = true;
+        document.getElementById("passInput").value = "";
+        document.getElementById("passError").textContent = "";
+        document.getElementById("amountError").textContent = "";
+        topUpAuthorized = false;
+        document.getElementById("passModal").hidden = false;
+        document.getElementById("passInput").focus();
+    }
+
+    function closeTopUp(){
+        document.getElementById("passModal").hidden = true;
+        topUpAuthorized = false;
+    }
+
+    async function checkPassword(){
+        const password = document.getElementById("passInput").value;
+        const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(password));
+        const hash = [...new Uint8Array(digest)].map(value => value.toString(16).padStart(2, "0")).join("");
+        if(hash !== TOP_UP_PASSWORD_HASH){
+            document.getElementById("passError").textContent = "Неверный пароль";
+            document.getElementById("passInput").value = "";
+            document.getElementById("passInput").focus();
+            return;
+        }
+        topUpAuthorized = true;
+        document.getElementById("passwordStep").hidden = true;
+        document.getElementById("amountStep").hidden = false;
+        document.getElementById("addInput").focus();
     }
 
     function addMoney(){
+        if(!topUpAuthorized) return;
         const amount = Number(document.getElementById("addInput").value);
-        if(!Number.isFinite(amount) || amount <= 0) return alert("Введите сумму больше 0");
-        if(amount > 10000) return alert("Максимум 10000");
-        const current = loadBalance();
-        const total = current + amount;
-        if(login){
-            localStorage.setItem(getBalanceKey(login), total);
-        } else {
-            localStorage.setItem("ronikCasinoBalance", total);
-        }
-        updateBalanceDisplay();
-        document.getElementById("addInput").value = "";
-        toggleAddBox(false);
-    }
-
-    function toggleAddBox(forceOpen){
-        const addBox = document.getElementById("addBox");
-        const addToggle = document.getElementById("addToggle");
-        const shouldOpen = typeof forceOpen === "boolean" ? forceOpen : addBox.hidden;
-
-        if(!shouldOpen){
-            addBox.hidden = true;
-            addToggle.setAttribute("aria-expanded", "false");
+        if(!Number.isSafeInteger(amount) || amount <= 0 || amount > 10000){
+            document.getElementById("amountError").textContent = "Введите целое число от 1 до 10000";
             return;
         }
-
-        if(addBox.hidden) openPasswordModal();
-    }
-
-    function openPasswordModal(){
-        const modal = document.getElementById("passModal");
-        modal.hidden = false;
-        const input = document.getElementById("passInput");
-        input.value = "";
-        document.getElementById("passError").textContent = "";
-        input.focus();
-    }
-
-    function closePasswordModal(){
-        document.getElementById("passModal").hidden = true;
-    }
-
-    function checkPassword(){
-        const input = document.getElementById("passInput");
-        const error = document.getElementById("passError");
-        if(input.value === "Ronik135"){
-            error.textContent = "";
-            closePasswordModal();
-            const addBox = document.getElementById("addBox");
-            const addToggle = document.getElementById("addToggle");
-            addBox.hidden = false;
-            addToggle.setAttribute("aria-expanded", "true");
-            document.getElementById("addInput").focus();
-        } else {
-            error.textContent = "❌ Неверный пароль!";
-            input.value = "";
-            input.focus();
-        }
+        localStorage.setItem("ronikCasinoBalance", String(loadBalance() + amount));
+        closeTopUp();
+        updateBalanceDisplay();
     }
 
     updateBalanceDisplay();
-    renderLoginState();
 </script>
 </body>
 </html>

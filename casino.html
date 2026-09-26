@@ -98,64 +98,21 @@ h1{
     z-index:10;
 }
 
-.loginSection{
-    position:relative;
-    top:auto;
-    left:auto;
-    right:auto;
-    display:flex;
-    flex-wrap:wrap;
-    align-items:center;
-    gap:8px;
-    justify-content:center;
-    background:rgba(17,17,17,0.24);
-    padding:12px 14px;
-    border:1px solid rgba(255,255,255,0.08);
-    border-radius:18px;
-    box-shadow:0 12px 40px rgba(0,0,0,0.18);
-    backdrop-filter:blur(14px);
-    width:min(920px, calc(100% - 32px));
-}
-
-.loginInput,
-.loginPinInput{
-    min-width:110px;
-    width:100%;
-    max-width:160px;
-    padding:8px 10px;
-    border-radius:10px;
-    border:1px solid #444;
-    background:#1a1a1a;
-    color:white;
-    font-size:14px;
-}
-
-.loginInput{ min-width:140px; }
-.loginPinInput{ width:90px; }
-
-.loginBtn,
-.registerBtn,
-.logoutBtn{
-    padding:10px 14px;
-    color:white;
-    border:0;
-    border-radius:10px;
+.addToggle{
+    width:40px;
+    height:40px;
+    margin:0;
+    padding:0;
+    border:1px solid rgba(255,204,0,0.65);
+    border-radius:50%;
+    background:linear-gradient(135deg,#ffcf28,#ff8500);
+    color:#171000;
+    font-size:25px;
+    line-height:1;
     cursor:pointer;
-    font-size:14px;
-    min-width:110px;
-    width:auto;
-    height:auto;
-    min-height:40px;
+    box-shadow:0 0 14px rgba(255,180,0,0.28);
 }
-
-.loginBtn{ background:linear-gradient(90deg,#00cc00,#009900); }
-.registerBtn{ background:linear-gradient(90deg,#ffae00,#ff6b00); }
-.logoutBtn{ background:linear-gradient(90deg,#ff4b4b,#c70000); }
-
-.loginGreeting{
-    font-size:14px;
-    color:#fff;
-}
+.addToggle:hover{ transform:scale(1.06); }
 
 .homeLink{
     position:relative;
@@ -177,74 +134,6 @@ h1{
     transform:scale(1.06);
     border-color:#ffcc00;
     box-shadow:0 0 12px rgba(255,204,0,0.45);
-}
-
-.addBox{
-    position:relative;
-    left:auto;
-    right:auto;
-    top:auto;
-    transform:none;
-    display:flex;
-    gap:6px;
-    align-items:center;
-}
-
-.addBox[hidden]{
-    display:none;
-}
-
-.addInput{
-    width:90px;
-    padding:5px 6px;
-    border-radius:7px;
-    border:1px solid #444;
-    background:#1a1a1a;
-    color:white;
-    font-size:13px;
-    text-align:center;
-    box-shadow:0 0 5px rgba(255,255,255,0.1);
-}
-
-.addBtn{
-    padding:5px 10px;
-    background:linear-gradient(90deg,#00cc00,#009900);
-    color:white;
-    border:0;
-    border-radius:7px;
-    cursor:pointer;
-    font-size:13px;
-    font-weight:bold;
-    box-shadow:0 0 7px rgba(0,255,0,0.4);
-    transition:0.2s;
-}
-.addBtn:hover{
-    transform:scale(1.08);
-    box-shadow:0 0 11px rgba(0,255,0,0.7);
-}
-
-.addToggle{
-    position:relative;
-    right:auto;
-    top:auto;
-    width:36px;
-    height:36px;
-    margin:0;
-    padding:0;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    background:linear-gradient(90deg,#00cc00,#009900);
-    color:white;
-    font-size:22px;
-    border:0;
-    border-radius:50%;
-    box-shadow:0 0 10px rgba(0,255,0,0.35);
-    cursor:pointer;
-}
-
-.addToggle:hover{
-    transform:scale(1.05);
 }
 
 /* Рулетка */
@@ -284,14 +173,13 @@ h1{
 .card{
     width:120px;
     height:120px;
-    flex-shrink:0;
+    flex:0 0 120px;
     border-radius:20px;
     display:flex;
     align-items:center;
     justify-content:center;
     font-size:35px;
     font-weight:bold;
-    margin-right:0;
     transition:0.3s;
     box-shadow:0 0 10px rgba(0,0,0,0.4);
 }
@@ -316,76 +204,26 @@ h1{
     65%{ transform:scale(1.1); }
 }
 
-/* Бонус-барабан */
-.bonusDrum{
-    width:min(500px, calc(100vw - 32px));
-    margin:-18px auto 24px;
-    padding:14px;
-    background:#111;
-    border:2px solid #3b3b3b;
-    border-radius:16px;
-    box-shadow:0 0 18px rgba(255,215,0,0.15);
-}
-.bonusTitle{
-    margin-bottom:10px;
-    color:#ffcc00;
-    font-weight:bold;
-}
-.bonusSlots{
-    display:flex;
-    gap:12px;
-    justify-content:center;
-}
-.bonusSlot{
+#money{
+    display:block;
     box-sizing:border-box;
-    width:calc((100% - 12px) / 2);
-    max-width:190px;
-    padding:8px;
+    width:min(360px, calc(100vw - 40px));
+    height:56px;
+    margin:24px auto 12px;
+    padding:12px 16px;
+    border:1px solid #575757;
     border-radius:12px;
-    background:#222;
-    border:1px solid #444;
-}
-.bonusLabel{
-    display:block;
-    margin-bottom:5px;
-    color:#bbb;
-    font-size:14px;
-}
-.bonusValue{
-    display:block;
-    min-height:42px;
-    border-radius:9px;
-    font-size:30px;
-    font-weight:bold;
-    line-height:42px;
-}
-.bonusValue.red{ background:#d00000; }
-.bonusValue.black{ background:#050505; border:1px solid #777; }
-.bonusValue.green{ background:#00aa00; }
-.bonusMultiplier{
-    background:linear-gradient(135deg,#5c2d91,#9b4dca);
-    color:white;
-}
-.bonusDrum.rollingColor #bonusColor,
-.bonusDrum.rollingMultiplier #bonusMultiplier{
-    animation:bonusRoll 0.1s linear infinite;
-}
-@keyframes bonusRoll{
-    50%{ transform:translateY(-3px); opacity:0.7; }
+    background:#171717;
+    color:#fff;
+    font-size:18px;
+    font-weight:600;
+    text-align:center;
+    box-shadow:0 8px 24px rgba(0,0,0,0.3);
+    outline:none;
 }
 
-/* Ставка */
-input{
-    width:170px;
-    padding:12px;
-    font-size:18px;
-    border-radius:10px;
-    text-align:center;
-    background:#222;
-    border:1px solid #444;
-    color:white;
-    box-shadow:0 0 10px rgba(255,255,255,0.1);
-}
+#money::placeholder{ color:#999; font-weight:400; }
+#money:focus{ border-color:#ffb300; box-shadow:0 0 0 3px rgba(255,179,0,0.18); }
 
 .quickBets{
     display:flex;
@@ -508,6 +346,7 @@ button:active{
     background:rgba(0,0,0,0.88);
 }
 .passModal[hidden]{ display:none; }
+.passDialog [hidden]{ display:none !important; }
 .passDialog{
     width:min(440px, calc(100vw - 32px));
     padding:28px 24px;
@@ -582,35 +421,10 @@ button:active{
         width:min(92vw,820px);
         justify-content:center;
     }
-    .loginSection{
-        position:relative;
-        top:auto;
-        left:auto;
-        right:auto;
-        justify-content:center;
-        width:min(92vw,920px);
-        border-radius:18px;
-        padding:14px 12px;
-        background:rgba(17,17,17,0.22);
-        border:1px solid rgba(255,255,255,0.08);
-        backdrop-filter:blur(14px);
-    }
-    .loginSection input,
-    .loginSection button,
-    .loginGreeting{
-        flex:1 1 100%;
-    }
-    .loginInput, .loginPinInput{ max-width:100%; }
-    .loginBtn, .registerBtn, .logoutBtn{ width:100%; }
     .roulette{height:140px;margin:20px auto;}
     .pointer{height:140px;}
     .track{top:10px;}
     .homeLink{margin-left:12px;margin-bottom:4px;}
-    .addBox{margin-top:2px;}    
-    .addInput{width:75px;}
-    .bonusDrum{margin:-10px auto 20px;padding:10px;}
-    .bonusSlots{gap:6px;}
-    .bonusSlot{width:calc((100% - 6px)/2);}
 }
 
 button:hover{
@@ -702,25 +516,33 @@ input:disabled{
 <div class="pageHeader">
     <a class="homeLink" href="index.html">← В меню</a>
 
-    <div class="loginSection" id="loginSection">
-        <input class="loginInput" id="loginInput" type="text" maxlength="16" placeholder="Логин">
-        <input class="loginPinInput" id="loginPinInput" type="password" maxlength="4" placeholder="Код">
-        <button class="loginBtn" id="loginBtn" type="button" onclick="loginAccount()">Войти</button>
-        <button class="registerBtn" id="registerBtn" type="button" onclick="registerAccount()">Зарегистрироваться</button>
-        <div class="loginGreeting" id="loginGreeting" hidden></div>
-        <button class="logoutBtn" id="logoutBtn" type="button" onclick="logoutLogin()" hidden>Выйти</button>
-    </div>
-
     <div class="topControls">
         <div class="balance">
         💰 Баланс: <span id="balance">1500</span>
         </div>
-        <button class="addToggle" id="addToggle" type="button" onclick="toggleAddBox()" aria-label="Пополнить баланс" aria-expanded="false">＋</button>
+        <button class="addToggle" type="button" onclick="openTopUp()" aria-label="Пополнить баланс" title="Пополнить баланс">＋</button>
     </div>
+</div>
 
-    <div class="addBox" id="addBox" hidden>
-        <input class="addInput" id="addInput" type="number" min="1" max="10000" step="1" placeholder="Сумма">
-        <button class="addBtn" onclick="addMoney()">Добавить</button>
+<div class="passModal" id="passModal" hidden>
+    <div class="passDialog" role="dialog" aria-modal="true" aria-labelledby="passTitle">
+        <h2 id="passTitle">Пополнение баланса</h2>
+        <div id="passwordStep">
+            <input class="passInput" id="passInput" type="password" autocomplete="off" placeholder="Пароль" onkeydown="if(event.key==='Enter') checkPassword()">
+            <div class="passError" id="passError" role="alert"></div>
+            <div class="passActions">
+                <button class="passCancel" type="button" onclick="closeTopUp()">Отмена</button>
+                <button class="passConfirm" type="button" onclick="checkPassword()">Продолжить</button>
+            </div>
+        </div>
+        <div id="amountStep" hidden>
+            <input class="passInput" id="addInput" type="number" min="1" max="10000" step="1" placeholder="Сумма">
+            <div class="passError" id="amountError" role="alert"></div>
+            <div class="passActions">
+                <button class="passCancel" type="button" onclick="closeTopUp()">Отмена</button>
+                <button class="passConfirm" type="button" onclick="addMoney()">Добавить</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -732,20 +554,6 @@ input:disabled{
 <div class="roulette">
     <div class="pointer"></div>
     <div class="track" id="track"></div>
-</div>
-
-<div class="bonusDrum" id="bonusDrum">
-    <div class="bonusTitle">🎲 Бонус-барабан</div>
-    <div class="bonusSlots">
-        <div class="bonusSlot">
-            <span class="bonusLabel">Цвет</span>
-            <span class="bonusValue black" id="bonusColor">?</span>
-        </div>
-        <div class="bonusSlot">
-            <span class="bonusLabel">Множитель</span>
-            <span class="bonusValue bonusMultiplier" id="bonusMultiplier">x?</span>
-        </div>
-    </div>
 </div>
 
 <input id="money" type="number" min="1" step="1" placeholder="Ставка">
@@ -788,18 +596,6 @@ input:disabled{
     </div>
 </div>
 
-<div class="passModal" id="passModal" hidden>
-    <div class="passDialog">
-        <h2>🔒 Введите пароль</h2>
-        <p>Требуется пароль администратора, обратитесь к админу что бы он пополнил ваш счёт!</p>
-        <input class="passInput" id="passInput" type="password" placeholder="Пароль" onkeydown="if(event.key==='Enter') checkPassword()">
-        <div class="passError" id="passError"></div>
-        <div class="passActions">
-            <button class="passCancel" type="button" onclick="closePasswordModal()">Отмена</button>
-            <button class="passConfirm" type="button" onclick="checkPassword()">Подтвердить</button>
-        </div>
-    </div>
-</div>
 <script>
 let choice = null;
 let spinning = false;
@@ -815,114 +611,70 @@ const ROUND_INTERVAL = 20000;
 const track = document.getElementById("track");
 const historyBlock = document.getElementById("history");
 const x25Sound = document.getElementById("x25Sound");
-const loginInput = document.getElementById("loginInput");
-const loginPinInput = document.getElementById("loginPinInput");
-const loginBtn = document.getElementById("loginBtn");
-const registerBtn = document.getElementById("registerBtn");
-const loginGreeting = document.getElementById("loginGreeting");
-const logoutBtn = document.getElementById("logoutBtn");
-
-const savedLogin = localStorage.getItem("ronikCasinoLogin") || "";
-let login = savedLogin;
-
-function getBalanceKey(name){
-    return "ronikCasinoBalance:" + name;
+function loadBalance(){
+    const stored=localStorage.getItem("ronikCasinoBalance");
+    if(stored===null) return 1500;
+    const saved=Number(stored);
+    return Number.isSafeInteger(saved) && saved>=0 ? saved : 1500;
 }
 
-function loadBalance(){
-    if(login){
-        const saved = Number(localStorage.getItem(getBalanceKey(login)));
-        return Number.isFinite(saved) ? saved : 1500;
+const legacyLogin=localStorage.getItem("ronikCasinoLogin");
+if(legacyLogin){
+    const legacyBalance=localStorage.getItem("ronikCasinoBalance:"+legacyLogin);
+    if(legacyBalance!==null && Number.isSafeInteger(Number(legacyBalance)) && Number(legacyBalance)>=0){
+        localStorage.setItem("ronikCasinoBalance",legacyBalance);
     }
-    const saved = Number(localStorage.getItem("ronikCasinoBalance"));
-    return Number.isFinite(saved) ? saved : 1500;
+    localStorage.removeItem("ronikCasinoLogin");
 }
 
 let balance = loadBalance();
 
-function renderLoginState(){
-    if(login){
-        loginInput.hidden = true;
-        loginBtn.hidden = true;
-        registerBtn.hidden = true;
-        loginPinInput.hidden = true;
-        loginInput.style.display = "none";
-        loginBtn.style.display = "none";
-        registerBtn.style.display = "none";
-        loginPinInput.style.display = "none";
-        loginGreeting.hidden = false;
-        loginGreeting.style.display = "inline-flex";
-        logoutBtn.hidden = false;
-        logoutBtn.style.display = "inline-flex";
-        loginGreeting.textContent = "Привет, " + login;
-    } else {
-        loginInput.hidden = false;
-        loginBtn.hidden = false;
-        registerBtn.hidden = false;
-        loginPinInput.hidden = false;
-        loginInput.style.display = "inline-flex";
-        loginPinInput.style.display = "inline-flex";
-        loginBtn.style.display = "inline-flex";
-        registerBtn.style.display = "inline-flex";
-        loginGreeting.hidden = true;
-        loginGreeting.style.display = "none";
-        logoutBtn.hidden = true;
-        logoutBtn.style.display = "none";
+const TOP_UP_PASSWORD_HASH="7b2c97fce79ddcc9bd0b8fb8125ef5996620cf6ef930c2a9d06b848b58d9ca38";
+let topUpAuthorized=false;
+
+function openTopUp(){
+    document.getElementById("passwordStep").hidden=false;
+    document.getElementById("amountStep").hidden=true;
+    document.getElementById("passInput").value="";
+    document.getElementById("passError").textContent="";
+    document.getElementById("amountError").textContent="";
+    topUpAuthorized=false;
+    document.getElementById("passModal").hidden=false;
+    document.getElementById("passInput").focus();
+}
+
+function closeTopUp(){
+    document.getElementById("passModal").hidden=true;
+    topUpAuthorized=false;
+}
+
+async function checkPassword(){
+    const error=document.getElementById("passError");
+    const password=document.getElementById("passInput").value;
+    const digest=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(password));
+    const hash=[...new Uint8Array(digest)].map(value=>value.toString(16).padStart(2,"0")).join("");
+    if(hash!==TOP_UP_PASSWORD_HASH){
+        error.textContent="Неверный пароль";
+        document.getElementById("passInput").value="";
+        document.getElementById("passInput").focus();
+        return;
     }
+    topUpAuthorized=true;
+    document.getElementById("passwordStep").hidden=true;
+    document.getElementById("amountStep").hidden=false;
+    document.getElementById("addInput").focus();
 }
 
-function getUserKey(name){
-    return "ronikCasinoUser:" + name;
-}
-
-function userExists(name){
-    return localStorage.getItem(getUserKey(name)) !== null;
-}
-
-function registerAccount(){
-    if(login) return;
-    const name = loginInput.value.trim();
-    const code = loginPinInput.value.trim();
-    if(!name) return alert("Введите логин");
-    if(!/^\d{4}$/.test(code)) return alert("Код должен быть 4 цифры");
-    if(userExists(name)) return alert("Такой логин уже занят");
-    localStorage.setItem(getUserKey(name), code);
-    login = name;
-    balance = 1500;
-    localStorage.setItem(getBalanceKey(login), balance);
-    localStorage.setItem("ronikCasinoLogin", login);
-    loginPinInput.value = "";
+function addMoney(){
+    if(!topUpAuthorized) return;
+    const amount=Number(document.getElementById("addInput").value);
+    if(!Number.isSafeInteger(amount) || amount<=0 || amount>10000){
+        document.getElementById("amountError").textContent="Введите целое число от 1 до 10000";
+        return;
+    }
+    balance+=amount;
     update();
-    renderLoginState();
-    alert("Аккаунт создан. Привет, " + login);
-}
-
-function loginAccount(){
-    if(login) return;
-    const name = loginInput.value.trim();
-    const code = loginPinInput.value.trim();
-    if(!name) return alert("Введите логин");
-    if(!/^\d{4}$/.test(code)) return alert("Введите 4-значный код");
-    const savedCode = localStorage.getItem(getUserKey(name));
-    if(savedCode === null) return alert("Пользователь не найден");
-    if(savedCode !== code) return alert("Неверный код");
-    login = name;
-    localStorage.setItem("ronikCasinoLogin", login);
-    balance = loadBalance();
-    loginPinInput.value = "";
-    update();
-    renderLoginState();
-    alert("Вы вошли как " + login);
-}
-
-function logoutLogin(){
-    if(!login) return;
-    login = "";
-    localStorage.removeItem("ronikCasinoLogin");
-    balance = loadBalance();
-    update();
-    renderLoginState();
-    alert("Вы вышли из аккаунта.");
+    closeTopUp();
 }
 
 function getAudioContext(){
@@ -1040,133 +792,6 @@ function pickCoinSide(side){
     },1200);
 }
 
-function getBonusColor(){
-    const random=Math.random();
-    return random<0.05 ? "green" : random<0.525 ? "red" : "black";
-}
-
-function getBonusMultiplier(){
-    const random=Math.random();
-    if(random<0.55) return Math.floor(Math.random()*3)+1;
-    if(random<0.82) return Math.floor(Math.random()*3)+4;
-    if(random<0.94) return Math.floor(Math.random()*3)+7;
-    if(random<0.985) return Math.floor(Math.random()*6)+10;
-    if(random<0.998) return Math.floor(Math.random()*5)+16;
-    return Math.floor(Math.random()*5)+21;
-}
-
-function showBonusColor(color){
-    const colorBlock=document.getElementById("bonusColor");
-    colorBlock.className="bonusValue "+color;
-    colorBlock.textContent=getColorIcon(color);
-}
-
-function showBonusMultiplier(multiplier){
-    document.getElementById("bonusMultiplier").textContent="x"+multiplier;
-}
-
-function finishBonusDrum(bonus,onComplete){
-    document.getElementById("result").textContent=
-        "🎲 Барабан: "+getColorIcon(bonus.color)+" x"+bonus.multiplier+
-        " · Рулетка начнёт крутиться через 2 секунды...";
-    setTimeout(()=>onComplete(bonus),2000);
-}
-
-function spinBonusDrum(bet,onComplete){
-    const drum=document.getElementById("bonusDrum");
-    const colors=["red","black","green"];
-    document.getElementById("bonusMultiplier").textContent="x?";
-    let colorStep=0;
-    drum.classList.add("rollingColor");
-    const colorAnimation=setInterval(()=>{
-        showBonusColor(colors[colorStep%colors.length]);
-        colorStep++;
-    },90);
-
-    setTimeout(()=>{
-        clearInterval(colorAnimation);
-        const bonus={color:getBonusColor(),multiplier:null};
-        showBonusColor(bonus.color);
-        drum.classList.remove("rollingColor");
-
-        document.getElementById("result").textContent=
-            "🎲 Выпал цвет барабана: "+getColorIcon(bonus.color)+" · Множитель крутится...";
-
-        drum.classList.add("rollingMultiplier");
-        const multiplierAnimation=setInterval(()=>{
-            showBonusMultiplier(Math.floor(Math.random()*25)+1);
-        },90);
-
-        setTimeout(()=>{
-            clearInterval(multiplierAnimation);
-            bonus.multiplier=getBonusMultiplier();
-            showBonusMultiplier(bonus.multiplier);
-            drum.classList.remove("rollingMultiplier");
-            finishBonusDrum(bonus,onComplete);
-        },1300);
-    },1300);
-}
-
-function addMoney(){
-    let amount = Number(document.getElementById("addInput").value);
-    if(!Number.isFinite(amount) || amount <= 0) return alert("Введите сумму больше 0");
-    if(amount > 10000) return alert("Максимум 10000");
-
-    balance += amount;
-    update();
-
-    let bal = document.querySelector(".balance");
-    bal.classList.add("add");
-    setTimeout(()=>bal.classList.remove("add"),600);
-    document.getElementById("addInput").value="";
-    toggleAddBox(false);
-}
-
-function toggleAddBox(forceOpen){
-    const addBox=document.getElementById("addBox");
-    const addToggle=document.getElementById("addToggle");
-    const shouldOpen=typeof forceOpen==="boolean" ? forceOpen : addBox.hidden;
-
-    if(!shouldOpen){
-        addBox.hidden=true;
-        addToggle.setAttribute("aria-expanded","false");
-        return;
-    }
-
-    if(addBox.hidden) openPasswordModal();
-}
-
-function openPasswordModal(){
-    const modal=document.getElementById("passModal");
-    modal.hidden=false;
-    const input=document.getElementById("passInput");
-    input.value="";
-    document.getElementById("passError").textContent="";
-    input.focus();
-}
-
-function closePasswordModal(){
-    document.getElementById("passModal").hidden=true;
-}
-
-function checkPassword(){
-    const input=document.getElementById("passInput");
-    const error=document.getElementById("passError");
-    if(input.value==="Ronik135"){
-        error.textContent="";
-        closePasswordModal();
-        const addBox=document.getElementById("addBox");
-        const addToggle=document.getElementById("addToggle");
-        addBox.hidden=false;
-        addToggle.setAttribute("aria-expanded","true");
-        document.getElementById("addInput").focus();
-    } else {
-        error.textContent="❌ Неверный пароль!";
-        input.value="";
-        input.focus();
-    }
-}
-
 function spawnCoinAnimation(startX,startY,offset){
     let coin=document.createElement("div");
     coin.className="coin";
@@ -1279,7 +904,7 @@ function betAll(){
 }
 
 function setControlsDisabled(disabled){
-    document.querySelectorAll("button, #money, #addInput")
+    document.querySelectorAll("button, #money")
         .forEach(control=>control.disabled=disabled);
 }
 
@@ -1308,7 +933,7 @@ function placeBet(){
 
     let money=Number(document.getElementById("money").value);
     if(!choice) return alert("Выбери цвет");
-    if(!Number.isFinite(money) || money<=0 || money>balance) return alert("Неверная ставка");
+    if(!Number.isSafeInteger(money) || money<=0 || money>balance) return alert("Неверная ставка");
 
     placedBet={money,color:choice};
     setControlsDisabled(true);
@@ -1323,13 +948,12 @@ function startRound(bet){
     spinning=true;
     setControlsDisabled(true);
     document.getElementById("result").textContent=bet ?
-        "🎲 Бонус-барабан крутится..." : "🎲 Рулетка крутится для истории...";
+        "🎲 Рулетка крутится..." : "🎲 Рулетка крутится для истории...";
 
-    spinBonusDrum(bet,bonus=>startMainRoulette(bet?.money ?? 0,bet?.color ?? null,bonus,bet));
+    startMainRoulette(bet?.money ?? 0,bet?.color ?? null,bet);
 }
 
-function finishMainRound(resultColor,closest,money,betColor,bonus,bet,coinResult){
-    const bonusApplied=resultColor===bonus.color;
+function finishMainRound(resultColor,closest,money,betColor,bet,coinResult){
     const hasWinningBet=coinResult ? coinResult.won : betColor!==null && resultColor===betColor;
 
     if(hasWinningBet) playWinSound(resultColor);
@@ -1341,8 +965,7 @@ function finishMainRound(resultColor,closest,money,betColor,bonus,bet,coinResult
 
     if(hasWinningBet){
         const colorMultiplier=resultColor==="green"?25:2;
-        const multiplier=coinResult ? coinResult.multiplier*(bonusApplied ? bonus.multiplier : 1) :
-            colorMultiplier*(bonusApplied ? bonus.multiplier : 1);
+        const multiplier=coinResult ? coinResult.multiplier : colorMultiplier;
         const winAmount=money*multiplier;
 
         if(resultColor==="green"){
@@ -1360,8 +983,7 @@ function finishMainRound(resultColor,closest,money,betColor,bonus,bet,coinResult
 
         document.getElementById("result").textContent=
             "🎉 +"+winAmount+" 💰"+
-            (coinResult ? " · 🪙 "+getCoinIcon(coinResult.side)+" x"+coinResult.multiplier : "")+
-            (bonusApplied ? " · Бонус x"+bonus.multiplier+"!" : "");
+            (coinResult ? " · 🪙 "+getCoinIcon(coinResult.side)+" x"+coinResult.multiplier : "");
     } else if(betColor!==null) {
         const bal=document.querySelector(".balance");
         bal.classList.add("lose");
@@ -1379,7 +1001,7 @@ function finishMainRound(resultColor,closest,money,betColor,bonus,bet,coinResult
     scheduleNextRound();
 }
 
-function startMainRoulette(money,betColor,bonus,bet){
+function startMainRoulette(money,betColor,bet){
     startRouletteSound();
     create();
 
@@ -1423,27 +1045,22 @@ function startMainRoulette(money,betColor,bonus,bet){
             if(resultColor==="yellow" && betColor==="coin"){
                 document.getElementById("result").textContent="🪙 Монета выпала! Выбери сторону.";
                 openCoinFlip(coinResult=>
-                    finishMainRound(resultColor,closest,money,betColor,bonus,bet,coinResult)
+                    finishMainRound(resultColor,closest,money,betColor,bet,coinResult)
                 );
             } else {
-                finishMainRound(resultColor,closest,money,betColor,bonus,bet,null);
+                finishMainRound(resultColor,closest,money,betColor,bet,null);
             }
         },5200);
     },100);
 }
 
 function update(){
-    document.getElementById("balance").innerHTML=balance;
-    if(login){
-        localStorage.setItem(getBalanceKey(login), balance);
-    } else {
-        localStorage.setItem("ronikCasinoBalance", balance);
-    }
+    document.getElementById("balance").textContent=balance;
+    localStorage.setItem("ronikCasinoBalance", String(balance));
 }
 
     create();
     update();
-    renderLoginState();
     scheduleNextRound();
 </script>
 </div>
