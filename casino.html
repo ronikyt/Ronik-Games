@@ -592,6 +592,8 @@ input:disabled{
     </div>
 </div>
 
+<div class="levelSlot"></div>
+
 <div class="passModal" id="passModal" hidden>
     <div class="passDialog" role="dialog" aria-modal="true" aria-labelledby="passTitle">
         <h2 id="passTitle">Пополнение баланса</h2>
@@ -662,6 +664,7 @@ input:disabled{
     </div>
 </div>
 
+<script src="progress.js"></script>
 <script>
 let choice = null;
 let spinning = false;
@@ -1029,6 +1032,7 @@ function finishMainRound(resultColor,closest,money,betColor,bet,coinResult){
     updateHistory(resultColor);
 
     if(hasWinningBet){
+        recordRouletteWin();
         const colorMultiplier=resultColor==="green"?20:2;
         const multiplier=coinResult ? coinResult.multiplier : colorMultiplier;
         const winAmount=Math.floor(money*multiplier);
@@ -1071,6 +1075,7 @@ function startMainRoulette(money,betColor,bet){
     create();
 
     track.style.transition="none";
+    track.style.opacity="0";
     track.style.transform="translateX(0px)";
 
     setTimeout(()=>{
@@ -1080,10 +1085,14 @@ function startMainRoulette(money,betColor,bet){
 
         let rect=document.querySelector(".roulette").getBoundingClientRect();
         let pointerX=rect.left+rect.width/2;
-        let targetX=index*itemWidth+itemWidth/2;
-        let move=pointerX-rect.left-targetX;
+        let firstCardRect=card.getBoundingClientRect();
+        let firstCardCenter=firstCardRect.left+firstCardRect.width/2;
+        let landingOffset=(Math.random()<0.5 ? -1 : 1)*itemWidth*0.35;
+        let targetX=firstCardCenter+index*itemWidth+landingOffset;
+        let move=pointerX-targetX;
 
         track.style.transition="transform 5s cubic-bezier(.1,.8,.2,1)";
+        track.style.opacity="1";
         track.style.transform=`translateX(${move}px)`;
 
         setTimeout(()=>{
@@ -1092,14 +1101,19 @@ function startMainRoulette(money,betColor,bet){
             let cards=document.querySelectorAll(".card");
             let closest=null;
             let closestDist=Infinity;
-
+            let foundContainingCard=false;
             cards.forEach(card=>{
                 let r=card.getBoundingClientRect();
                 let center=r.left+r.width/2;
-                let dist=Math.abs(center-pointerX);
-                if(dist<closestDist){
-                    closestDist=dist;
+                let containsPointer=pointerX>=r.left && pointerX<=r.right;
+                let distance=Math.abs(center-pointerX);
+                if(containsPointer && !foundContainingCard){
                     closest=card;
+                    closestDist=distance;
+                    foundContainingCard=true;
+                } else if(!foundContainingCard && distance<closestDist){
+                    closest=card;
+                    closestDist=distance;
                 }
             });
 

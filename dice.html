@@ -208,6 +208,7 @@
         <button class="addToggle" type="button" onclick="openTopUp()" aria-label="Пополнить баланс" title="Пополнить баланс">＋</button>
     </div>
 </div>
+<div class="levelSlot"></div>
 <div class="passModal" id="passModal" hidden>
     <div class="passDialog" role="dialog" aria-modal="true" aria-labelledby="passTitle">
         <h2 id="passTitle">Пополнение баланса</h2>
@@ -261,7 +262,9 @@
         <p class="gameStatus" id="gameStatus" aria-live="polite"></p>
     </section>
 </main>
+<script src="progress.js"></script>
 <script>
+    if(requireGameLevel(2,"Дайс")){
     const TOP_UP_PASSWORD_HASH="7b2c97fce79ddcc9bd0b8fb8125ef5996620cf6ef930c2a9d06b848b58d9ca38";
     const HOUSE_FACTOR=0.90;
     const NUMBER_OUTCOMES=101;
@@ -422,6 +425,7 @@
     rollButton.addEventListener("click",rollDice);
     updateBalance();
     updateOdds();
+    }
 </script>
 </body>
 </html>

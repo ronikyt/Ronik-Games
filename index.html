@@ -196,6 +196,7 @@
         <button class="addToggle" type="button" onclick="openTopUp()" aria-label="Пополнить баланс" title="Пополнить баланс">＋</button>
     </div>
 </div>
+<div class="levelSlot"></div>
 <div class="passModal" id="passModal" hidden>
     <div class="passDialog" role="dialog" aria-modal="true" aria-labelledby="passTitle">
         <h2 id="passTitle">Пополнение баланса</h2>
@@ -226,13 +227,13 @@
             <h2>Рулетка Роника</h2>
             <p>Ставки на цвета и монета удачи.</p>
         </a>
-        <a class="mode" href="miner.html">
+        <a class="mode" href="miner.html" data-required-level="3">
             <div class="mode-icon">⛏️</div>
             <h2>Минёр</h2>
             <span class="newMode">Новый режим!</span>
             <p>Открывай клетки, избегай мин, забирай выигрыш.</p>
         </a>
-        <a class="mode" href="dice.html">
+        <a class="mode" href="dice.html" data-required-level="2">
             <div class="mode-icon">🎲</div>
             <h2>Дайс</h2>
             <span class="newMode">Новый режим!</span>
@@ -245,7 +246,8 @@
         </div>
     </section>
 </main>
-<footer class="version">v0.7</footer>
+<footer class="version">v1.2</footer>
+<script src="progress.js"></script>
 <script>
     function loadBalance(){
         const storedBalance = localStorage.getItem("ronikCasinoBalance");
