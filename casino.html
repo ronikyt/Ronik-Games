@@ -242,6 +242,11 @@ h1{
     padding:8px;
     font-size:16px;
 }
+.betOptions{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+}
 
 /* Кнопки ставок */
 button{
@@ -411,10 +416,10 @@ input[type="password"]::-ms-reveal{ display:none; }
 }
 
 @media (max-width: 700px){
-    .pageContent{margin-top:0;padding-top:6px;}
+    .pageContent{box-sizing:border-box;width:100%;margin-top:0;padding:8px 12px 32px;}
     h1{
-        margin:0 16px 12px;
-        font-size:30px;
+        margin:0 0 10px;
+        font-size:26px;
     }
     .pageHeader{
         box-sizing:border-box;
@@ -448,9 +453,27 @@ input[type="password"]::-ms-reveal{ display:none; }
     .topControls > *{pointer-events:auto;}
     .balance{min-width:0;padding:8px 10px;font-size:14px;}
     .addToggle{flex:0 0 38px;width:38px;height:38px;}
-    .roulette{height:140px;margin:20px auto;}
-    .pointer{height:140px;}
-    .track{top:10px;}
+    .roundTimer{margin:0 auto 6px;font-size:15px;}
+    .roulette{width:100%;height:128px;margin:16px auto;border-radius:16px;}
+    .pointer{height:128px;}
+    .track{top:4px;}
+    #money{width:100%;max-width:360px;height:50px;margin:16px auto 10px;font-size:16px;}
+    .quickBets{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;width:min(100%,360px);margin:8px auto 14px;}
+    .quickBets button{box-sizing:border-box;width:100%;min-width:0;height:46px;margin:0;padding:6px 2px;font-size:14px;}
+    .betOptions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;width:min(100%,360px);margin:8px auto 14px;}
+    .betOptions button{box-sizing:border-box;width:100%;height:50px;margin:0;padding:8px 6px;font-size:16px;}
+    .spinBtn{box-sizing:border-box;width:min(220px,100%);height:54px;margin:8px auto;padding:10px;font-size:18px;}
+    #bet{font-size:20px;}
+    #result{overflow-wrap:anywhere;}
+    .history{margin-top:18px;font-size:17px;}
+    .history span{font-size:24px;margin:0 3px;}
+    .coinDialog{box-sizing:border-box;width:min(440px,calc(100vw - 24px));max-height:calc(100vh - 24px);overflow-y:auto;padding:22px 14px;border-radius:18px;}
+    .coinFlipDisplay{font-size:72px;}
+    .coinFlipResult{font-size:22px;}
+    .coinOptions{gap:10px;}
+    .coinOptions button{box-sizing:border-box;width:calc(50% - 5px);min-height:64px;height:auto;margin:0;padding:10px 6px;font-size:16px;}
+    .passDialog{box-sizing:border-box;width:min(440px,calc(100vw - 24px));max-height:calc(100vh - 24px);overflow-y:auto;padding:22px 16px;border-radius:18px;}
+    .passActions button{box-sizing:border-box;min-height:48px;height:auto;padding:10px 6px;font-size:15px;}
 }
 
 @media (max-width: 400px){
@@ -462,11 +485,19 @@ input[type="password"]::-ms-reveal{ display:none; }
     .topControls{gap:4px;}
     .balance{padding:7px 7px;font-size:12px;}
     .addToggle{width:34px;height:34px;}
+        h1{font-size:24px;}
+        .quickBets{gap:4px;}
+        .quickBets button{font-size:13px;}
+        .betOptions{gap:8px;}
 }
 
 button:hover{
     transform:scale(1.08);
     box-shadow:0 0 20px rgba(255,255,255,0.4);
+}
+
+@media (hover:none){
+    button:hover{transform:none;}
 }
 
 button:disabled,
@@ -602,14 +633,12 @@ input:disabled{
     <button type="button" onclick="betAll()">Все</button>
 </div>
 
-<br>
-
-<button id="redBtn" class="redBtn" onclick="choose('red')">x2</button>
-<button id="blackBtn" class="blackBtn" onclick="choose('black')">x2</button>
-<button id="greenBtn" class="greenBtn" onclick="choose('green')">x20</button>
-<button id="coinBtn" class="coinBtn" onclick="choose('coin')">🪙</button>
-
-<br>
+<div class="betOptions" role="group" aria-label="Выбор ставки">
+    <button id="redBtn" class="redBtn" onclick="choose('red')">x2</button>
+    <button id="blackBtn" class="blackBtn" onclick="choose('black')">x2</button>
+    <button id="greenBtn" class="greenBtn" onclick="choose('green')">x20</button>
+    <button id="coinBtn" class="coinBtn" onclick="choose('coin')">🪙</button>
+</div>
 
 <button class="spinBtn" onclick="placeBet()">СТАВКА</button>
 

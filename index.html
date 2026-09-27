@@ -136,7 +136,7 @@
     .mode h2{ margin:0; color:#ffcf28; font-size:28px; }
     .mode p{ margin:12px 0 20px; color:#d2d2d2; }
     .newMode{ margin-top:8px; padding:5px 11px; border-radius:999px; background:#148a3b; color:#fff; font-size:14px; font-weight:bold; }
-    .modeSoon{ cursor:default; }
+    .modeSoon{ grid-column:1 / -1; justify-self:stretch; width:auto; cursor:default; }
     .modeSoon:hover{ transform:none; border-color:#6a4b00; box-shadow:0 0 28px rgba(255,180,0,.16); }
 
     .passModal{
@@ -232,14 +232,20 @@
             <span class="newMode">Новый режим!</span>
             <p>Открывай клетки, избегай мин, забирай выигрыш.</p>
         </a>
-        <div class="mode modeSoon" aria-label="Скоро">
+        <a class="mode" href="dice.html">
+            <div class="mode-icon">🎲</div>
+            <h2>Дайс</h2>
+            <span class="newMode">Новый режим!</span>
+            <p>Угадай, будет число меньше или больше выбранного.</p>
+        </a>
+        <div class="mode modeSoon" role="note">
             <div class="mode-icon">✨</div>
             <h2>Скоро...</h2>
-            <p>Новый режим уже в разработке.</p>
+            <p>Скоро появится новый режим.</p>
         </div>
     </section>
 </main>
-<footer class="version">v0.2</footer>
+<footer class="version">v0.7</footer>
 <script>
     function loadBalance(){
         const storedBalance = localStorage.getItem("ronikCasinoBalance");

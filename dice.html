@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ronik Casino — Дайс</title>
+<style>
+    *{ box-sizing:border-box; }
+    body{
+        min-height:100vh;
+        margin:0;
+        padding:0 20px 28px;
+        display:flex;
+        flex-direction:column;
+        color:#fff;
+        font-family:Arial,sans-serif;
+        text-align:center;
+        background:radial-gradient(circle at 50% 0%,rgba(255,180,0,.16),transparent 35%),linear-gradient(160deg,#070707,#1a1a1a,#080808);
+    }
+    .pageHeader{
+        position:relative;
+        z-index:1000;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        gap:10px;
+        width:calc(100% + 40px);
+        margin:0 -20px 26px;
+        padding:10px 0 12px;
+        background:rgba(10,10,10,.08);
+        box-shadow:0 0 30px rgba(0,0,0,.16);
+        border-bottom:1px solid rgba(255,255,255,.06);
+        backdrop-filter:blur(12px);
+    }
+    .homeLink{
+        position:relative;
+        align-self:flex-start;
+        margin-left:20px;
+        display:inline-flex;
+        align-items:center;
+        min-height:36px;
+        padding:8px 13px;
+        border:1px solid #555;
+        border-radius:9px;
+        background:#171717;
+        color:#fff;
+        text-decoration:none;
+        white-space:nowrap;
+    }
+    .homeLink:hover{ border-color:#ffcc00; }
+    .topControls{ position:relative; display:flex; align-items:center; justify-content:center; gap:10px; z-index:10; }
+    .balance{
+        display:inline-flex;
+        align-items:center;
+        gap:8px;
+        min-width:120px;
+        padding:8px 14px;
+        border:1px solid rgba(255,255,255,.08);
+        border-radius:999px;
+        background:rgba(12,12,12,.96);
+        color:#fff;
+        font-size:15px;
+        line-height:1.1;
+        white-space:nowrap;
+        box-shadow:0 12px 30px rgba(0,0,0,.35);
+    }
+    .addToggle{
+        width:40px;
+        height:40px;
+        padding:0;
+        border:1px solid rgba(255,204,0,.65);
+        border-radius:50%;
+        background:linear-gradient(135deg,#ffcf28,#ff8500);
+        color:#171000;
+        font-size:25px;
+        cursor:pointer;
+        box-shadow:0 0 14px rgba(255,180,0,.28);
+    }
+    main{ width:min(560px,100%); margin:0 auto; flex:1; }
+    h1{ margin:0 0 8px; color:#ffd633; font-size:36px; }
+    .subtitle{ margin:0 0 24px; color:#aaa; font-size:15px; }
+    .gamePanel{
+        padding:24px;
+        border:1px solid #383838;
+        border-radius:14px;
+        background:linear-gradient(145deg,#1b1b1b,#101010);
+        box-shadow:0 12px 36px rgba(0,0,0,.34);
+        text-align:left;
+    }
+    .fieldLabel{ display:block; margin:0 0 8px; color:#aaa; font-size:13px; }
+    .betInput{
+        width:100%;
+        height:46px;
+        padding:0 12px;
+        border:1px solid #454545;
+        border-radius:8px;
+        outline:none;
+        background:#0e0e0e;
+        color:#fff;
+        font-size:16px;
+    }
+    .betInput:focus{ border-color:#e4b82e; box-shadow:0 0 0 2px rgba(228,184,46,.14); }
+    .choiceLabel{ margin-top:20px; }
+    .choices{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+    .choice{
+        min-height:42px;
+        border:1px solid #4a4a4a;
+        border-radius:8px;
+        background:#202020;
+        color:#ddd;
+        font-size:15px;
+        cursor:pointer;
+    }
+    .choice[aria-pressed="true"]{ border-color:#ffd633; background:#49390f; color:#ffe36b; }
+    .targetHeader{ display:flex; justify-content:space-between; gap:12px; margin-top:20px; color:#aaa; font-size:13px; }
+    .targetValue{ color:#ffd633; font-weight:700; }
+    .rangeInput{ width:100%; margin:14px 0 4px; accent-color:#ffbf19; cursor:pointer; }
+    .rangeEnds{ display:flex; justify-content:space-between; color:#777; font-size:12px; }
+    .odds{
+        display:grid;
+        grid-template-columns:repeat(3,minmax(0,1fr));
+        gap:8px;
+        margin:22px 0;
+        padding:14px 0;
+        border-top:1px solid #333;
+        border-bottom:1px solid #333;
+    }
+    .odd{ min-width:0; text-align:center; }
+    .oddLabel{ display:block; min-height:30px; color:#888; font-size:12px; }
+    .oddValue{ display:block; color:#fff; font-size:16px; font-weight:700; overflow-wrap:anywhere; }
+    .oddValue.multiplier{ color:#6de4ae; }
+    .rollResult{
+        width:116px;
+        height:116px;
+        margin:0 auto 18px;
+        display:grid;
+        place-items:center;
+        border:2px solid #6a4b00;
+        border-radius:18px;
+        background:linear-gradient(145deg,#28220f,#17130a);
+        color:#ffe36b;
+        font-size:44px;
+        font-weight:800;
+        box-shadow:0 0 24px rgba(255,180,0,.12);
+        transition:color .2s,border-color .2s,box-shadow .2s;
+    }
+    .rollResult.win{ border-color:#168b5b; color:#6de4ae; box-shadow:0 0 24px rgba(22,139,91,.28); }
+    .rollResult.lose{ border-color:#9d3030; color:#ff7575; box-shadow:0 0 24px rgba(157,48,48,.24); }
+    .rollButton{
+        width:100%;
+        min-height:48px;
+        padding:10px 12px;
+        border:0;
+        border-radius:8px;
+        background:linear-gradient(180deg,#ffc72c,#ed8e00);
+        color:#211700;
+        font-size:15px;
+        font-weight:800;
+        cursor:pointer;
+    }
+    .rollButton:disabled{ cursor:not-allowed; opacity:.45; }
+    .hint,.gameStatus{ min-height:20px; margin:10px 0 0; color:#aaa; font-size:13px; line-height:1.45; text-align:center; }
+    .hint:empty,.gameStatus:empty{ display:none; }
+    .gameStatus.win{ color:#6de4ae; }
+    .gameStatus.lose{ color:#ff7575; }
+    .passModal{ position:fixed; inset:0; z-index:10000; display:flex; align-items:center; justify-content:center; padding:16px; background:rgba(0,0,0,.88); }
+    .passModal[hidden], .passDialog [hidden]{ display:none !important; }
+    .passDialog{ width:min(440px,calc(100vw - 32px)); padding:28px 24px; border:2px solid #ffcc00; border-radius:20px; background:linear-gradient(145deg,#171717,#333); box-shadow:0 0 32px rgba(255,204,0,.35); text-align:center; }
+    .passDialog h2{ margin:0 0 16px; color:#ffcc00; }
+    .passInput{ box-sizing:border-box; width:100%; margin:0 auto 10px; padding:12px; border:1px solid #444; border-radius:10px; background:#222; color:#fff; font-size:18px; text-align:center; }
+    input[type="password"]::-ms-reveal{ display:none; }
+    .passError{ min-height:22px; margin-bottom:10px; color:#ff5a5a; font-size:14px; }
+    .passActions{ display:flex; justify-content:center; gap:12px; }
+    .passActions button{ width:calc(50% - 6px); max-width:170px; min-height:46px; margin:0; padding:10px; border:0; border-radius:10px; cursor:pointer; }
+    .passCancel{ background:#444; color:#fff; }
+    .passConfirm{ background:linear-gradient(180deg,#00cc00,#009900); color:#fff; }
+    @media (max-width:700px){
+        body{ padding:0 12px 30px; }
+        .pageHeader{ box-sizing:border-box; flex-direction:row; justify-content:stretch; gap:8px; width:calc(100% + 24px); min-height:56px; margin:0 -12px 20px; padding:8px 12px; }
+        .homeLink{ position:absolute; left:12px; top:50%; margin:0; padding:8px 10px; font-size:14px; transform:translateY(-50%); }
+        .homeLink:hover{ transform:translateY(-50%) scale(1.04); }
+        .topControls{ position:absolute; top:50%; left:calc(50% + (100vw - 100%)/2); gap:6px; transform:translate(-50%,-50%); pointer-events:none; }
+        .topControls > *{ pointer-events:auto; }
+        .balance{ min-width:0; padding:8px 10px; font-size:14px; }
+        .addToggle{ flex:0 0 38px; width:38px; height:38px; }
+        main{ margin-top:12px; width:100%; }
+        .gamePanel{ padding:18px 14px; }
+        .odds{ gap:4px; }
+        .oddLabel{ font-size:11px; }
+        .oddValue{ font-size:14px; }
+    }
+    @media (max-width:400px){
+        .homeLink{ left:8px; padding:7px 6px; font-size:12px; }
+    }
+    @media (max-width:340px){
+        .pageHeader{ padding-right:8px; padding-left:8px; }
+        .topControls{ gap:4px; }
+        .balance{ padding:7px; font-size:12px; }
+        .addToggle{ width:34px; height:34px; }
+    }
+</style>
+</head>
+<body>
+<div class="pageHeader">
+    <a class="homeLink" href="index.html">← В меню</a>
+    <div class="topControls">
+        <div class="balance">💰 Баланс: <span id="balance">1500</span></div>
+        <button class="addToggle" type="button" onclick="openTopUp()" aria-label="Пополнить баланс" title="Пополнить баланс">＋</button>
+    </div>
+</div>
+<div class="passModal" id="passModal" hidden>
+    <div class="passDialog" role="dialog" aria-modal="true" aria-labelledby="passTitle">
+        <h2 id="passTitle">Пополнение баланса</h2>
+        <div id="passwordStep">
+            <input class="passInput" id="passInput" type="password" autocomplete="off" placeholder="Пароль" onkeydown="if(event.key==='Enter') checkPassword()">
+            <div class="passError" id="passError" role="alert"></div>
+            <div class="passActions">
+                <button class="passCancel" type="button" onclick="closeTopUp()">Отмена</button>
+                <button class="passConfirm" type="button" onclick="checkPassword()">Продолжить</button>
+            </div>
+        </div>
+        <div id="amountStep" hidden>
+            <input class="passInput" id="addInput" type="number" min="1" max="10000" step="1" placeholder="Сумма">
+            <div class="passError" id="amountError" role="alert"></div>
+            <div class="passActions">
+                <button class="passCancel" type="button" onclick="closeTopUp()">Отмена</button>
+                <button class="passConfirm" type="button" onclick="addMoney()">Добавить</button>
+            </div>
+        </div>
+    </div>
+</div>
+<main>
+    <h1>🎲 Дайс</h1>
+    <p class="subtitle">Выбери порог и угадай число от 0 до 100.</p>
+    <section class="gamePanel" aria-label="Настройки броска">
+        <label class="fieldLabel" for="betAmount">Ставка</label>
+        <input class="betInput" id="betAmount" type="number" min="1" step="1" value="100" inputmode="numeric">
+
+        <div class="fieldLabel choiceLabel">Условие</div>
+        <div class="choices" role="group" aria-label="Условие выигрыша">
+            <button class="choice" id="belowChoice" type="button" aria-pressed="true">Меньше</button>
+            <button class="choice" id="aboveChoice" type="button" aria-pressed="false">Больше</button>
+        </div>
+
+        <div class="targetHeader">
+            <label for="targetNumber">Целевое число</label>
+            <output class="targetValue" id="targetValue" for="targetNumber">50</output>
+        </div>
+        <input class="rangeInput" id="targetNumber" type="range" min="1" max="100" value="50" aria-label="Целевое число от 1 до 100">
+        <div class="rangeEnds"><span>1</span><span>100</span></div>
+
+        <div class="odds" aria-live="polite">
+            <div class="odd"><span class="oddLabel">Шанс выиграть</span><span class="oddValue" id="chanceValue">49%</span></div>
+            <div class="odd"><span class="oddLabel">Множитель</span><span class="oddValue multiplier" id="multiplierValue">x1.83</span></div>
+            <div class="odd"><span class="oddLabel">Выплата при победе</span><span class="oddValue" id="payoutValue">183</span></div>
+        </div>
+
+        <div class="rollResult" id="rollResult" aria-live="polite">—</div>
+        <button class="rollButton" id="rollButton" type="button">Бросить</button>
+        <p class="hint" id="hint"></p>
+        <p class="gameStatus" id="gameStatus" aria-live="polite"></p>
+    </section>
+</main>
+<script>
+    const TOP_UP_PASSWORD_HASH="7b2c97fce79ddcc9bd0b8fb8125ef5996620cf6ef930c2a9d06b848b58d9ca38";
+    const HOUSE_FACTOR=0.90;
+    const NUMBER_OUTCOMES=101;
+    let topUpAuthorized=false;
+    let direction="below";
+
+    const balanceElement=document.getElementById("balance");
+    const betInput=document.getElementById("betAmount");
+    const targetInput=document.getElementById("targetNumber");
+    const belowChoice=document.getElementById("belowChoice");
+    const aboveChoice=document.getElementById("aboveChoice");
+    const rollButton=document.getElementById("rollButton");
+
+    function loadBalance(){
+        const storedBalance=localStorage.getItem("ronikCasinoBalance");
+        if(storedBalance===null) return 1500;
+        const savedBalance=Number(storedBalance);
+        return Number.isSafeInteger(savedBalance) && savedBalance>=0 ? savedBalance : 1500;
+    }
+
+    function updateBalance(){
+        balanceElement.textContent=String(loadBalance());
+    }
+
+    function getWinningOutcomes(target){
+        return direction==="below" ? target : 100-target;
+    }
+
+    function updateOdds(){
+        const target=Number(targetInput.value);
+        const stake=Number(betInput.value);
+        const winningOutcomes=getWinningOutcomes(target);
+        const chanceValue=document.getElementById("chanceValue");
+        const multiplierValue=document.getElementById("multiplierValue");
+        const payoutValue=document.getElementById("payoutValue");
+        const hint=document.getElementById("hint");
+
+        document.getElementById("targetValue").textContent=String(target);
+        chanceValue.textContent=(winningOutcomes/NUMBER_OUTCOMES*100).toFixed(1)+"%";
+        const validStake=Number.isSafeInteger(stake) && stake>0;
+        const enoughBalance=validStake && stake<=loadBalance();
+        if(winningOutcomes===0){
+            multiplierValue.textContent="—";
+            payoutValue.textContent="—";
+            hint.textContent="С таким числом выбранное условие выиграть не может.";
+            rollButton.disabled=true;
+            return;
+        }
+
+        const multiplier=HOUSE_FACTOR*NUMBER_OUTCOMES/winningOutcomes;
+        multiplierValue.textContent="x"+multiplier.toFixed(2);
+        payoutValue.textContent=validStake ? String(Math.floor(stake*multiplier)) : "—";
+        hint.textContent=!validStake ? "Ставка должна быть целым числом больше нуля." : !enoughBalance ? "На балансе недостаточно средств для этой ставки." : "";
+        rollButton.disabled=!validStake || !enoughBalance;
+    }
+
+    function chooseDirection(nextDirection){
+        direction=nextDirection;
+        belowChoice.setAttribute("aria-pressed",String(direction==="below"));
+        aboveChoice.setAttribute("aria-pressed",String(direction==="above"));
+        updateOdds();
+    }
+
+    function setStatus(message,state=""){
+        const status=document.getElementById("gameStatus");
+        status.textContent=message;
+        status.className="gameStatus"+(state ? " "+state : "");
+    }
+
+    function rollDice(){
+        const stake=Number(betInput.value);
+        const balance=loadBalance();
+        const target=Number(targetInput.value);
+        const winningOutcomes=getWinningOutcomes(target);
+        if(!Number.isSafeInteger(stake) || stake<=0){
+            setStatus("Ставка должна быть целым числом больше нуля.","lose");
+            updateOdds();
+            return;
+        }
+        if(stake>balance){
+            setStatus("Недостаточно средств для этой ставки.","lose");
+            updateOdds();
+            return;
+        }
+        if(winningOutcomes===0){
+            setStatus("Измени число или условие: выиграть с этим выбором невозможно.","lose");
+            updateOdds();
+            return;
+        }
+
+        const result=Math.floor(Math.random()*NUMBER_OUTCOMES);
+        const won=direction==="below" ? result<target : result>target;
+        const multiplier=HOUSE_FACTOR*NUMBER_OUTCOMES/winningOutcomes;
+        const payout=won ? Math.floor(stake*multiplier) : 0;
+        localStorage.setItem("ronikCasinoBalance",String(balance-stake+payout));
+        updateBalance();
+        updateOdds();
+
+        const resultElement=document.getElementById("rollResult");
+        resultElement.textContent=String(result);
+        resultElement.className="rollResult "+(won ? "win" : "lose");
+        if(won){
+            setStatus("Победа! Выплата: "+payout+" монет.","win");
+        }else{
+            setStatus("Не угадал. Ставка проиграна.","lose");
+        }
+    }
+
+    function openTopUp(){
+        document.getElementById("passwordStep").hidden=false;
+        document.getElementById("amountStep").hidden=true;
+        document.getElementById("passInput").value="";
+        document.getElementById("passError").textContent="";
+        document.getElementById("amountError").textContent="";
+        topUpAuthorized=false;
+        document.getElementById("passModal").hidden=false;
+        document.getElementById("passInput").focus();
+    }
+
+    function closeTopUp(){
+        document.getElementById("passModal").hidden=true;
+        topUpAuthorized=false;
+    }
+
+    async function checkPassword(){
+        const password=document.getElementById("passInput").value;
+        const digest=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(password));
+        const hash=[...new Uint8Array(digest)].map(value=>value.toString(16).padStart(2,"0")).join("");
+        if(hash!==TOP_UP_PASSWORD_HASH){
+            document.getElementById("passError").textContent="Неверный пароль";
+            document.getElementById("passInput").value="";
+            document.getElementById("passInput").focus();
+            return;
+        }
+        topUpAuthorized=true;
+        document.getElementById("passwordStep").hidden=true;
+        document.getElementById("amountStep").hidden=false;
+        document.getElementById("addInput").focus();
+    }
+
+    function addMoney(){
+        if(!topUpAuthorized) return;
+        const amount=Number(document.getElementById("addInput").value);
+        if(!Number.isSafeInteger(amount) || amount<=0 || amount>10000){
+            document.getElementById("amountError").textContent="Введите целое число от 1 до 10000";
+            return;
+        }
+        localStorage.setItem("ronikCasinoBalance",String(loadBalance()+amount));
+        closeTopUp();
+        updateBalance();
+        updateOdds();
+    }
+
+    belowChoice.addEventListener("click",()=>chooseDirection("below"));
+    aboveChoice.addEventListener("click",()=>chooseDirection("above"));
+    targetInput.addEventListener("input",updateOdds);
+    betInput.addEventListener("input",updateOdds);
+    rollButton.addEventListener("click",rollDice);
+    updateBalance();
+    updateOdds();
+</script>
+</body>
+</html>

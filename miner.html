@@ -9,20 +9,26 @@
     body{
         min-height:100vh;
         margin:0;
-        padding:72px 20px 40px;
+        padding:0 20px 40px;
         color:#fff;
         font-family:Arial,sans-serif;
         text-align:center;
         background:radial-gradient(circle at 50% 0%,rgba(255,180,0,.16),transparent 35%),linear-gradient(160deg,#070707,#1a1a1a,#080808);
     }
-    .topBar{
+    .pageHeader{
         position:relative;
+        z-index:1000;
         display:flex;
+        flex-direction:column;
         align-items:center;
-        justify-content:center;
-        gap:12px;
-        width:min(920px,100%);
-        margin:0 auto 24px;
+        gap:10px;
+        width:calc(100% + 40px);
+        margin:0 -20px 24px;
+        padding:10px 0 12px;
+        background:rgba(10,10,10,.08);
+        box-shadow:0 0 30px rgba(0,0,0,.16);
+        border-bottom:1px solid rgba(255,255,255,.06);
+        backdrop-filter:blur(12px);
     }
     .balance{
         position:static;
@@ -57,8 +63,15 @@
         box-shadow:0 0 8px rgba(255,255,255,.15);
         transition:.2s;
     }
-    .balanceRow{ display:flex; align-items:center; gap:8px; flex-shrink:0; }
-    .homeLink{ position:absolute; left:0; }
+    .topControls{
+        position:relative;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:10px;
+        z-index:10;
+    }
+    .homeLink{ position:relative; align-self:flex-start; margin-left:20px; }
     .homeLink:hover{ border-color:#ffcc00; box-shadow:0 0 12px rgba(255,204,0,.35); }
     .addToggle{
         width:40px;
@@ -156,10 +169,12 @@
     .gameStatus.lose{ color:#ff7575; }
     .passDialog{ color:#fff; }
     @media (max-width:700px){
-        body{ padding:12px 12px 30px; }
-        .topBar{ gap:6px; margin-bottom:20px; }
-        .homeLink{ padding:8px 10px; font-size:14px; }
-        .balanceRow{ gap:6px; }
+        body{ padding:0 12px 30px; }
+        .pageHeader{ box-sizing:border-box; flex-direction:row; justify-content:stretch; gap:8px; width:calc(100% + 24px); min-height:56px; margin:0 -12px 20px; padding:8px 12px; }
+        .homeLink{ position:absolute; left:12px; top:50%; margin:0; padding:8px 10px; font-size:14px; transform:translateY(-50%); }
+        .homeLink:hover{ transform:translateY(-50%) scale(1.04); }
+        .topControls{ position:absolute; top:50%; left:calc(50% + (100vw - 100%)/2); gap:6px; transform:translate(-50%,-50%); pointer-events:none; }
+        .topControls > *{ pointer-events:auto; }
         .balance{ min-width:0; padding:8px 10px; font-size:14px; }
         .addToggle{ flex:0 0 38px; width:38px; height:38px; }
         main{ margin-top:12px; width:100%; }
@@ -169,20 +184,24 @@
         .gameStats{ grid-template-columns:1fr 1fr; }
     }
     @media (max-width:400px){
-        .topBar{ display:grid; grid-template-columns:1fr; gap:10px; }
-        .homeLink{ position:static; justify-self:start; }
-        .balanceRow{ justify-self:center; }
+        .homeLink{ left:8px; padding:7px 6px; font-size:12px; }
+    }
+    @media (max-width:340px){
+        .pageHeader{ padding-right:8px; padding-left:8px; }
+        .topControls{ gap:4px; }
+        .balance{ padding:7px; font-size:12px; }
+        .addToggle{ width:34px; height:34px; }
     }
 </style>
 </head>
 <body>
-<header class="topBar">
+<div class="pageHeader">
 <a class="homeLink" href="index.html">← В меню</a>
-<div class="balanceRow">
+<div class="topControls">
     <div class="balance">💰 Баланс: <span id="balance">1500</span></div>
     <button class="addToggle" type="button" onclick="openTopUp()" aria-label="Пополнить баланс" title="Пополнить баланс">＋</button>
 </div>
-</header>
+</div>
 <div class="passModal" id="passModal" hidden>
     <div class="passDialog" role="dialog" aria-modal="true" aria-labelledby="passTitle">
         <h2 id="passTitle">Пополнение баланса</h2>
