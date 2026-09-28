@@ -37,7 +37,7 @@
 
     function renderProgressUI(){
         const state = getProgressState();
-        const title = state.level === 1 ? "Начинающий" : state.level === 2 ? "Уровень 2" : "MAX";
+        const title = state.level === 1 ? "Начинающий" : state.level === 2 ? "Опытный" : "MAX";
         const nextText = state.level === 1 ? `${state.rouletteWins} / ${LEVEL_TWO_WINS} побед до Дайса` : state.level === 2 ? `${state.rouletteWins} / ${LEVEL_THREE_WINS} побед до Минёра` : `${LEVEL_THREE_WINS} / ${LEVEL_THREE_WINS} побед`;
         document.querySelectorAll(".levelSlot").forEach(slot => {
             slot.innerHTML = `<div class="levelProgress" aria-label="Прогресс уровня"><div class="levelHeader"><strong>Уровень ${state.level}: ${title}</strong><span>${nextText}</span><button class="levelHelp" type="button" aria-expanded="false" aria-label="Объяснение прогресса">?</button></div><div class="levelTrack"><span></span></div><div class="levelHelpText" hidden>Победы для уровня засчитываются только в режиме «Рулетка Роника». Победы в Дайсе и Минёре прогресс не увеличивают.</div></div>`;
